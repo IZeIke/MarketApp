@@ -4,7 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.harit.marketapp.Application
-import com.example.harit.marketapp.ui.LoginPage.LoginActivity
+import com.example.harit.marketapp.ui.feedPage.MainActivity
+import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 

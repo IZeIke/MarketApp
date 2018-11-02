@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.LoginPage.SignupActivity">
+    tools:context=".ui.loginPage.SignupActivity">
 
     <LinearLayout
         android:id="@+id/signupContainer"
@@ -47,7 +47,7 @@
             app:boxStrokeColor="@color/white"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EmailEdt"
+                android:id="@+id/emailEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@null"
@@ -69,6 +69,7 @@
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEdt"
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@null"
@@ -94,12 +95,13 @@
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@null"
                 android:textColor="@color/white"
+                android:inputType="textPassword"
                 android:hint="Confirm Password"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginBtn"
+            android:id="@+id/signupBtn"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="20dp"
@@ -114,5 +116,24 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_below="@id/signupContainer"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/warningText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text=""
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

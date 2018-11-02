@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.LoginPage.LoginActivity">
+    tools:context=".ui.loginPage.LoginActivity">
 
     <LinearLayout
         android:id="@+id/loginContainer"
@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:textCursorDrawable="@null"
             android:textColor="@color/white"
+            android:inputType="textPassword"
             android:hint="Password"
             />
         </com.google.android.material.textfield.TextInputLayout>
