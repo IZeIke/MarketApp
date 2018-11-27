@@ -2,7 +2,6 @@ package com.example.harit.marketapp.ui.sellPage
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,24 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
 import com.stepstone.stepper.BlockingStep
-import com.stepstone.stepper.Step
 import com.stepstone.stepper.StepperLayout
 import com.stepstone.stepper.VerificationError
-import kotlinx.android.synthetic.main.fragment_photo_choose.*
 import android.provider.MediaStore
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AlertDialog
-import com.asksira.bsimagepicker.Utils.dp2px
 import com.asksira.bsimagepicker.BSImagePicker
-import com.asksira.bsimagepicker.Utils
+import com.example.harit.marketapp.ui.adapter.ImageHolizontalAdapter
 import com.robertlevonyan.components.picker.ItemModel
 import com.robertlevonyan.components.picker.PickerDialog
-import com.example.harit.marketapp.ui.feedPage.MainActivity
-import com.robertlevonyan.components.picker.Str
-import com.example.harit.marketapp.ui.model.SampleSearchModel
-
-
+import com.example.harit.marketapp.ui.model.Event.ImageListEvent
+import com.yarolegovich.discretescrollview.transform.Pivot
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import kotlinx.android.synthetic.main.fragment_select_photo.*
+import org.greenrobot.eventbus.EventBus
 
 
 class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImageSelectedListener {
@@ -56,7 +52,7 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_photo_choose,container,false)
+        return LayoutInflater.from(context).inflate(R.layout.fragment_select_photo,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -93,7 +89,7 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
             val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery")
             val builder = this.activity?.let { it1 -> AlertDialog.Builder(it1) }
             builder?.let {
-                it.setTitle("Add Photo")
+                it.setTitle("Add photo from")
                 it.setItems(options) { dialog, which ->
                     if(options[which] == "Take Photo"){
                         openCamera()
@@ -111,21 +107,15 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
 
     override fun onMultiImageSelected(uriList: MutableList<Uri>?) {
         uriList?.let {
-            var count = 1
-            for (image in it){
-                when (count){
-                    1 -> image1.setImageURI(image)
-                    2 -> image2.setImageURI(image)
-                    3 -> image3.setImageURI(image)
-                    4 -> image4.setImageURI(image)
-                    5 -> image5.setImageURI(image)
-                    6 -> image6.setImageURI(image)
-                    7 -> image7.setImageURI(image)
-                    8 -> image8.setImageURI(image)
-                    9 -> image9.setImageURI(image)
-                }
-                count++
-            }
+            EventBus.getDefault().post(ImageListEvent(uriList))
+            pictureScroll.setItemTransformer(ScaleTransformer.Builder()
+                    .setMaxScale(1.05f)
+                    .setMinScale(0.8f)
+                    .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+                    .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
+                    .build())
+            pictureScroll.adapter = ImageHolizontalAdapter(1,uriList)
+            placeholder.visibility = View.GONE
         }
     }
 
@@ -133,7 +123,6 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
         super.onAttach(context)
 
     }
-
 
     override fun onSelected() {
 

@@ -30,7 +30,7 @@ class SellFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             startActivity(Intent(activity,AddItemActivity::class.java))
         }
     }

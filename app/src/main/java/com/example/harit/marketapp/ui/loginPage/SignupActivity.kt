@@ -33,11 +33,8 @@ class SignupActivity : AppCompatActivity() {
             var password = passwordEdt.text.toString().isPasswordValid()
             var passwordConfirm = passwordEdt.text.toString() == confirmPasswordEdt.text.toString()
 
-            val id = UUID.randomUUID().toString()
-
             val user = HashMap<String,Any>()
             user.put("email", emailEdt.text.toString())
-            user.put("id", id)
             user.put("name", name)
             user.put("username", emailEdt.text.toString())
 
@@ -46,7 +43,8 @@ class SignupActivity : AppCompatActivity() {
                 mAuth.createUserWithEmailAndPassword(emailEdt.text.toString(), passwordEdt.text.toString())
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                FirebaseFirestore.getInstance().collection("Users").document(id)
+                                user.put("id", it.result.user.uid)
+                                FirebaseFirestore.getInstance().collection("Users").document(it.result.user.uid)
                                         .set(user).addOnSuccessListener {
                                             startActivity(Intent(this, MainActivity::class.java))
                                             finishAffinity()

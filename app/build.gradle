@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-firestore:17.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
 
     implementation 'org.greenrobot:eventbus:3.1.1'
     //image slider
@@ -46,6 +47,8 @@ dependencies {
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     /////
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+
     implementation 'com.github.mirrajabi:search-dialog:1.2.3'
     implementation 'com.asksira.android:bsimagepicker:1.0.1'
     implementation 'com.robertlevonyan.components:Picker:1.1.3'

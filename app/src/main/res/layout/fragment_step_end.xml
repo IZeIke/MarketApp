@@ -35,10 +35,10 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -46,6 +46,7 @@
     <include layout="@layout/horizontal_1px_line" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/nameEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -62,6 +63,7 @@
     <include layout="@layout/horizontal_1px_line" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/descriptionEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -76,7 +78,7 @@
         />
 
     <com.google.android.material.chip.ChipGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:singleLine="true"
         android:layout_marginBottom="10dp"
@@ -85,24 +87,28 @@
         >
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Orn"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
+            android:id="@+id/photosetType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="normal"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
+            android:id="@+id/set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="set 5"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
+            android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="comp"
@@ -110,7 +116,59 @@
             />
 
     </com.google.android.material.chip.ChipGroup>
+
     <include layout="@layout/horizontal_1px_line" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/priceEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:background="@android:color/transparent"
+        android:inputType="numberDecimal"
+        android:textCursorDrawable="@null"
+        android:textColor="@color/colorPrimaryDark"
+        android:hint="ราคา"
+        />
+
+    <include layout="@layout/horizontal_1px_line" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/shippingEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:background="@android:color/transparent"
+        android:textCursorDrawable="@null"
+        android:textColor="@color/colorPrimaryDark"
+        android:hint="วิธีการจัดส่ง"
+        />
+
+    <include layout="@layout/horizontal_1px_line" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/paymentEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:background="@android:color/transparent"
+        android:textCursorDrawable="@null"
+        android:textColor="@color/colorPrimaryDark"
+        android:hint="วิธีการชำระเงิน"
+        />
+
+    <include layout="@layout/horizontal_1px_line" />
 
 </LinearLayout>
