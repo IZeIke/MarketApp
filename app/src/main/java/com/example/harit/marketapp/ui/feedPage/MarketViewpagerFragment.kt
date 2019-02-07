@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.ui.adapter.MainPageAdapter
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_market_viewpager.*
@@ -31,17 +33,28 @@ class MarketViewpagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTopBar()
 
+        var adapter = MainPageAdapter(childFragmentManager)
+        adapter.setFragmentItem(FeedFragment.newInstance()
+                , 0, "Buy")
+        adapter.setFragmentItem(FeedFragment.newInstance()
+                , 1, "Trade")
+        viewPager?.adapter = adapter
+        initTab()
+    }
+
+    private fun initTab() {
+        tabBar.setSelectedTabIndicatorColor(ContextCompat.getColor(tabBar.context, R.color.white))
+        tabBar.setTabTextColors(ContextCompat.getColor(tabBar.context, R.color.white40)
+                , ContextCompat.getColor(tabBar.context, R.color.white))
+        tabBar.setupWithViewPager(viewPager)
+    }
+
+    private fun setTopBar() {
         topBar.setText("Market")
         topBar.setChatNoti("0")
         topBar.setNoti("0")
-
-        signoutBtn.setOnClickListener {
-            FirebaseAuth.getInstance().signOut().also {
-                startActivity(Intent(activity,LoginActivity::class.java))
-                (activity as MainActivity).finish()
-            }
-        }
     }
 
 }

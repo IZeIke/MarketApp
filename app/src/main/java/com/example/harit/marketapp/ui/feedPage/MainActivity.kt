@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.harit.marketapp.R
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.example.harit.marketapp.ui.sellPage.SellFragment
+import com.example.harit.marketapp.ui.settingPage.SettingFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -41,9 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation.defaultBackgroundColor = Color.parseColor("#008577")
         bottom_navigation.accentColor = Color.parseColor("#FFFFFF")
-        bottom_navigation.inactiveColor = Color.parseColor("#C1FFFFFF")
+        bottom_navigation.inactiveColor = Color.parseColor("#66FFFFFF")
 
         bottom_navigation.isTranslucentNavigationEnabled = true
+        bottom_navigation.currentItem = 1
 
         bottom_navigation.setOnTabSelectedListener { position, wasSelected ->
             if(!wasSelected){
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.contentContainer,MarketViewpagerFragment.newInstance())
+                                .replace(R.id.contentContainer,SettingFragment.newInstance())
                                 .commit()
                     }
                 }

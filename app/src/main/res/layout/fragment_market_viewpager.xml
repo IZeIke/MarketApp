@@ -9,7 +9,9 @@
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        >
 
         <com.example.harit.marketapp.ui.customview.MarketAppbar
             android:id="@+id/topBar"
@@ -22,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone"
         >
 
     <com.google.android.material.button.MaterialButton
@@ -31,8 +34,36 @@
         android:layout_centerInParent="true"
         android:backgroundTint="@color/orange"
         android:text="sign out"
+        android:visibility="gone"
         />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabBar"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabBar"
+        >
+    </androidx.viewpager.widget.ViewPager>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

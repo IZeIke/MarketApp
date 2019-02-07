@@ -49,6 +49,9 @@ dependencies {
     /////
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
+    //circleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     implementation 'com.github.mirrajabi:search-dialog:1.2.3'
     implementation 'com.asksira.android:bsimagepicker:1.0.1'
     implementation 'com.robertlevonyan.components:Picker:1.1.3'

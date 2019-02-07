@@ -36,6 +36,7 @@
         </activity>
         <activity android:name=".ui.loginPage.LoginActivity" />
         <activity android:name=".ui.feedPage.MainActivity" />
+        <activity android:name=".ui.itemPage.ItemPageActivity" />
         <activity android:name=".ui.loginPage.SignupActivity"></activity>
         <activity android:name=".ui.sellPage.AddItemActivity"></activity>
     </application>
