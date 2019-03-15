@@ -10,3 +10,9 @@ fun ImageView.setImageUri(uri: Uri){
             .load(File(uri.path)) // Uri of the picture
             .into(this)
 }
+
+fun ImageView.setImageUrl(url :String?){
+    Glide.with(this.context)
+            .load(url)
+            .into(this)
+}

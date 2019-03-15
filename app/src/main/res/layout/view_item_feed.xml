@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:id="@+id/cardView"
@@ -47,6 +47,47 @@
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
         />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleLine="false"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="2sp"
+            android:text="Orn"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/photosetType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="normal"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set 5"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="comp"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+
+    </com.google.android.material.chip.ChipGroup>
 
 </LinearLayout>
 

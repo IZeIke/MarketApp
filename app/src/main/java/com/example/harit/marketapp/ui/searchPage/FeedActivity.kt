@@ -1,47 +1,39 @@
-package com.example.harit.marketapp.ui.feedPage
+package com.example.harit.marketapp.ui.searchPage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
 import com.example.harit.marketapp.ui.model.FeedItem
+import com.example.harit.marketapp.ui.model.SearchModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.activity_feed.*
 
-class FeedFragment : Fragment() {
+class FeedActivity : AppCompatActivity() {
 
     private val feedList : MutableList<FeedItem> = arrayListOf()
 
-    companion object {
-        fun newInstance(): FeedFragment{
-            val fragment = FeedFragment()
-            return fragment
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_feed)
+
+        var model = intent.getParcelableExtra<SearchModel>("searchModel")
+
+        setTopbar()
+
+        getData()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_feed,container,false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
+    private fun getData() {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("Feed")
-                .orderBy("create",Query.Direction.DESCENDING)
+                .orderBy("create", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
@@ -55,17 +47,33 @@ class FeedFragment : Fragment() {
                 .addOnFailureListener { exception ->
                     Log.d("document-error", "Error getting documents: ", exception)
                 }
-
-
-
-
     }
 
     private fun setRecyclerView(feedList: MutableList<FeedItem>) {
         feedRecyclerView?.let {
-            feedRecyclerView.layoutManager = GridLayoutManager(context,2)
+            feedRecyclerView.layoutManager = GridLayoutManager(this,2)
             feedRecyclerView.addItemDecoration(GridItemSpacingDecoration(2,20,true))
-            feedRecyclerView.adapter = FeedPageAdapter(context!!, feedList)
+            feedRecyclerView.adapter = FeedPageAdapter(this, feedList)
+        }
+    }
+
+    private fun setTopbar() {
+        topBar?.let {
+            it.setText("Search")
+            it.haveNoti(false)
+            it.haveSearch(false)
+            it.haveFilter(true)
+            it.getFilterHolder()?.setOnClickListener {
+                startActivityForResult(Intent(this,FilterActivity::class.java),1)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1){
+            //getData()
         }
     }
 

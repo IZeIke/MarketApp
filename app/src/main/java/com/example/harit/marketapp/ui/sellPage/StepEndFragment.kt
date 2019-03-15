@@ -43,7 +43,7 @@ class StepEndFragment : Fragment() , BlockingStep {
 
     override fun onCompleteClicked(callback: StepperLayout.OnCompleteClickedCallback?) {
 
-        var imageList = hashMapOf<Int,String>()
+        var imageList = ArrayList<String>()
 
         for ((i,uri) in uriList.withIndex()) {
 
@@ -55,7 +55,8 @@ class StepEndFragment : Fragment() , BlockingStep {
                             FirebaseStorage.getInstance()
                                     .reference.child("images/$imageName")
                                     .downloadUrl.addOnCompleteListener {
-                                imageList.put(i,it.result.toString())
+                                imageList.add(i,it.result.toString())
+                                      //  .put(i,it.result.toString())
                                 val feedItem = FeedItem()
                                 feedItem.filter = filter
                                 feedItem.name = nameEdt.text.toString()
@@ -76,7 +77,8 @@ class StepEndFragment : Fragment() , BlockingStep {
                             FirebaseStorage.getInstance()
                                     .reference.child("images/$imageName")
                                     .downloadUrl.addOnCompleteListener {
-                                imageList.put(i,it.result.toString())
+                                //imageList.put(i,it.result.toString())
+                                imageList.add(i,it.result.toString())
                                 //imageList[i] = it.result.toString()
                             }
                         }

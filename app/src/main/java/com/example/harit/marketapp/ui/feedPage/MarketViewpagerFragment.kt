@@ -2,14 +2,18 @@ package com.example.harit.marketapp.ui.feedPage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.MainPageAdapter
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
+import com.example.harit.marketapp.ui.model.SearchModel
+import com.example.harit.marketapp.ui.searchPage.FilterActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_market_viewpager.*
 
@@ -55,6 +59,15 @@ class MarketViewpagerFragment : Fragment() {
         topBar.setText("Market")
         topBar.setChatNoti("0")
         topBar.setNoti("0")
+        topBar.haveSearch(true)
+        topBar.getSearchHolder()?.setOnClickListener {
+            var bundle = Bundle().also { bundle ->
+                bundle.putParcelable("model",SearchModel())
+                bundle.putInt("tag",1)
+            }
+            startActivity(Intent(context,FilterActivity::class.java)
+                    .putExtras(bundle))
+        }
     }
 
 }

@@ -18,12 +18,45 @@
         android:textSize="20sp" />
 
     <RelativeLayout
+        android:id="@+id/filterHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_filter_list_white_24dp"
+            android:layout_marginRight="16dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/searchHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/notiHolder"
+        android:visibility="visible"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_search_black_24dp"
+            android:layout_marginRight="16dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/notiHolder"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/chatHolder"
         >
         <ImageView
+            android:id="@+id/notiIc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -52,7 +85,7 @@
         android:layout_alignParentEnd="true"
         >
         <ImageView
-            android:id="@+id/chat"
+            android:id="@+id/chatIc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

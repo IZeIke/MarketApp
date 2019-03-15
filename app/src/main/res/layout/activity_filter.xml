@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <com.example.harit.marketapp.ui.customview.MarketAppbar
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.example.harit.marketapp.ui.customview.MarketAppbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+            android:id="@+id/typeHolder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/typeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="หมวดหมู่"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_below="@id/typeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                >
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/setButton"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_dialog_filter_book_state"
+                        android:text="รูปเซ็ท"
+                        android:layout_marginRight="10dp"
+                        android:textAppearance="@style/TextAppearance"
+                        android:textColor="#FF8C8C8C"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/singleButton"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_dialog_filter_book_state"
+                        android:text="รูปซิงเกิ้ล"
+                        android:layout_marginRight="10dp"
+                        android:textAppearance="@style/TextAppearance"
+                        android:textColor="#FF8C8C8C"
+                        />
+
+
+                </com.google.android.material.chip.ChipGroup>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nameHolder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/nameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="เมมเบอร์"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_below="@id/nameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/memberButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="All"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/memberChooseButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="เลือกเมมเบอร์"
+                            android:layout_marginRight="10dp"
+                            android:padding="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sortHolder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/sortText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="เรียงตาม"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_below="@id/sortText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/lastedButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="ล่าสุด"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/priceButton1"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="ราคามากไปน้อย"
+                            android:layout_marginRight="10dp"
+                            android:padding="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/priceButton2"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="ราคาน้อยไปมาก"
+                            android:layout_marginRight="10dp"
+                            android:padding="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setHolder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/setText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="เซ็ท"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_below="@id/setText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/setNumberButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="All"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/setNumberChooseButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="เลือกเซ็ท"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/formatHolder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/bottom_navigation_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/formatText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="รูปแบบ"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_below="@id/formatText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/formatAllButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="All"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/compButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="Comp"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/halfButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="Half"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/fullButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="Full"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/closeUpButton"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_dialog_filter_book_state"
+                            android:text="Close-up"
+                            android:layout_marginRight="10dp"
+                            android:textAppearance="@style/TextAppearance"
+                            android:textColor="#FF8C8C8C"
+                            />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_navigation_height"
+    android:background="@color/colorPrimaryDark"
+    android:layout_alignParentBottom="true"
+    >
+
+    <Button
+    android:id="@+id/summitButton"
+    android:layout_alignParentRight="true"
+    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="ค้นหา"
+    android:textStyle="bold"
+    android:layout_marginRight="10dp"
+    android:backgroundTint="@color/colorPrimary"
+    />
+</RelativeLayout>
+
+</RelativeLayout>

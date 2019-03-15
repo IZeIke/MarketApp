@@ -7,7 +7,7 @@ import com.robertlevonyan.components.picker.Str
 
 data class FeedItem(
         @ServerTimestamp val create : Timestamp? = null,
-        var imageUrl : HashMap<Int,String>? = null,
+        var imageUrl : ArrayList<String>? = null,
         var name : String? = null,
         var price : Int? = null,
         var filter : HashMap<String,String>? = null,

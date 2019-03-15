@@ -39,6 +39,8 @@
         <activity android:name=".ui.itemPage.ItemPageActivity" />
         <activity android:name=".ui.loginPage.SignupActivity"></activity>
         <activity android:name=".ui.sellPage.AddItemActivity"></activity>
+        <activity android:name=".ui.searchPage.FilterActivity"></activity>
+        <activity android:name=".ui.searchPage.FeedActivity"></activity>
     </application>
 
 </manifest>

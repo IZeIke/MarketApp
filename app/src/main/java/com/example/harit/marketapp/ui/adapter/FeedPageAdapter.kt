@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.itemPage.ItemPageActivity
+import com.example.harit.marketapp.ui.model.FeedItem
+import com.robertlevonyan.components.picker.set
 import kotlinx.android.synthetic.main.view_item_feed.view.*
 
-class FeedPageAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FeedPageAdapter(val context: Context, private val feedList: MutableList<FeedItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -18,11 +21,26 @@ class FeedPageAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return feedList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is ItemViewHolder){
+
+            feedList[position].let {
+                holder.imageView.set(R.drawable.mockup)
+                it.imageUrl?.let {list ->
+                    if(list.size > 0)
+                        holder.imageView.setImageUrl(list[0])
+                }
+                holder.tvName.text = it.name
+                holder.tvPrice.text = it.price.toString()
+                holder.nameTag.text = it.filter?.get("name")
+                holder.photosetTypeTag.text = it.filter?.get("photosetType")
+                holder.typeTag.text = it.filter?.get("type")
+                holder.setTag.text = it.filter?.get("set")
+            }
+
             holder.cardView.setOnClickListener {
                 val intent = Intent(context,ItemPageActivity::class.java)
                 context.startActivity(intent)
@@ -35,6 +53,10 @@ class FeedPageAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         var imageView = itemView.imageView
         var tvName = itemView.textName
         var tvPrice = itemView.textPrice
+        var nameTag = itemView.name
+        var photosetTypeTag = itemView.photosetType
+        var typeTag = itemView.type
+        var setTag = itemView.set
     }
 
 }
