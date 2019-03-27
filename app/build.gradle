@@ -52,6 +52,9 @@ dependencies {
     /////
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
+    //numberPicker
+    implementation 'biz.kasual:materialnumberpicker:1.2.1'
+
     //circleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 

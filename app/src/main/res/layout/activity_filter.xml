@@ -251,7 +251,7 @@
                         >
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/setNumberButton"
+                            android:id="@+id/setNumberAllButton"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -312,7 +312,7 @@
                         >
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/formatAllButton"
+                            android:id="@+id/AllButton"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

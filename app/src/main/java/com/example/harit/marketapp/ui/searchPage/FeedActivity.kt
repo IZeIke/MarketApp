@@ -64,7 +64,11 @@ class FeedActivity : AppCompatActivity() {
             it.haveSearch(false)
             it.haveFilter(true)
             it.getFilterHolder()?.setOnClickListener {
-                startActivityForResult(Intent(this,FilterActivity::class.java),1)
+                var bundle = Bundle().also { bundle ->
+                    bundle.putParcelable("model",SearchModel())
+                    bundle.putInt("tag",2)
+                }
+                startActivityForResult(Intent(this,FilterActivity::class.java).putExtras(bundle),1)
             }
         }
     }
