@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.feedPage.MainActivity
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
-import com.example.harit.marketapp.ui.sellPage.SellFragment
+import com.example.harit.marketapp.ui.model.SearchModel
+import com.example.harit.marketapp.ui.searchPage.FilterActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_setting.*
 
@@ -46,5 +47,13 @@ class SettingFragment : Fragment() {
         topBar.setText("Setting")
         topBar.setChatNoti("0")
         topBar.setNoti("0")
+        topBar.getSearchHolder()?.setOnClickListener {
+            var bundle = Bundle().also { bundle ->
+                bundle.putParcelable("model", SearchModel())
+                bundle.putInt("tag",1)
+            }
+            startActivity(Intent(context, FilterActivity::class.java)
+                    .putExtras(bundle))
+        }
     }
 }

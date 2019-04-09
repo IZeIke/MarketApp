@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <com.example.harit.marketapp.ui.customview.MarketAppbar
+            android:id="@+id/topBar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />
 
@@ -18,6 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_navigation_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
@@ -37,7 +39,7 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_add"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="16dp"
         />
 
     <TextView
@@ -47,6 +49,7 @@
         android:layout_centerInParent="true"
         android:textSize="20sp"
         android:text="ไม่มีรายการขาย"
+        android:visibility="gone"
         />
 
     </RelativeLayout>

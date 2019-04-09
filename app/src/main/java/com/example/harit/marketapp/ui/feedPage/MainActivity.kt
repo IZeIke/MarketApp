@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.defaultBackgroundColor = Color.parseColor("#008577")
         bottom_navigation.accentColor = Color.parseColor("#FFFFFF")
         bottom_navigation.inactiveColor = Color.parseColor("#66FFFFFF")
-
+        bottom_navigation.isBehaviorTranslationEnabled = false
         bottom_navigation.isTranslucentNavigationEnabled = true
         bottom_navigation.currentItem = 1
 

@@ -16,28 +16,11 @@
         <com.example.harit.marketapp.ui.customview.MarketAppbar
             android:id="@+id/topBar"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:visibility="gone"
-        >
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signoutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:backgroundTint="@color/orange"
-        android:text="sign out"
-        android:visibility="gone"
-        />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -60,6 +43,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         android:layout_below="@+id/tabBar"
         >
     </androidx.viewpager.widget.ViewPager>
