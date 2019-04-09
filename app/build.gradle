@@ -52,6 +52,9 @@ dependencies {
     /////
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
+    //spinner
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
     //numberPicker
     implementation 'biz.kasual:materialnumberpicker:1.2.1'
 

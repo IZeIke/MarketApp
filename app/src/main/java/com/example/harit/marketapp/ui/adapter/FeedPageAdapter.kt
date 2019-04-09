@@ -24,6 +24,13 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
         return feedList.size
     }
 
+    fun addList(list : MutableList<FeedItem>){
+        for(item in list){
+            feedList.add(item)
+        }
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is ItemViewHolder){
 

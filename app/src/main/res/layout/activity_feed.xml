@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.example.harit.marketapp.ui.customview.MarketAppbar
@@ -9,9 +11,50 @@
         android:layout_height="wrap_content">
     </com.example.harit.marketapp.ui.customview.MarketAppbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feedRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
+        <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="#FAFAFA"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/feedRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:background="#FAFAFA"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/loading"
+            style="@style/SpinKitView.FadingCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/light_sea_green"
+            android:background="#FAFAFA"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/noItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="ไม่พบผลการค้นหา"
+            android:visibility="gone"
+            />
+
+    </FrameLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

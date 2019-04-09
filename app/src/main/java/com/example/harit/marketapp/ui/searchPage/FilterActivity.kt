@@ -1,5 +1,6 @@
 package com.example.harit.marketapp.ui.searchPage
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +13,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
 import biz.kasual.materialnumberpicker.MaterialNumberPicker
 import android.graphics.Color
+import android.view.View
 import com.example.harit.marketapp.ui.model.Set
 
 
@@ -41,11 +43,17 @@ class FilterActivity : AppCompatActivity() {
                     startActivity(Intent(this,FeedActivity::class.java).putExtra("searchModel",model))
                     finish()
                 }else{
-
+                    setResult(Activity.RESULT_OK,Intent().putExtra("searchModel",model))
+                    finish()
                 }
             }
 
         }
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_CANCELED, Intent())
+        finish()
     }
 
     private fun getPicker() : MaterialNumberPicker {
@@ -82,7 +90,10 @@ class FilterActivity : AppCompatActivity() {
 
         when(model?.format){
             Format.SET -> setButton.isSelected = true
-            Format.SINGLE -> singleButton.isSelected = true
+            Format.SINGLE -> {
+                singleButton.isSelected = true
+                formatHolder.visibility = View.GONE
+            }
             else -> {}
         }
 
@@ -120,12 +131,14 @@ class FilterActivity : AppCompatActivity() {
 
 
         setButton.setOnClickListener {
+            formatHolder.visibility = View.VISIBLE
             model.format = Format.SET
             setButton.isSelected = true
             singleButton.isSelected = false
         }
 
         singleButton.setOnClickListener {
+            formatHolder.visibility = View.GONE
             model.format = Format.SINGLE
             setButton.isSelected = false
             singleButton.isSelected = true

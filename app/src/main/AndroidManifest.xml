@@ -27,20 +27,36 @@
         </provider>
         <activity
             android:name=".ui.SplashScreenActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.loginPage.LoginActivity" />
-        <activity android:name=".ui.feedPage.MainActivity" />
-        <activity android:name=".ui.itemPage.ItemPageActivity" />
-        <activity android:name=".ui.loginPage.SignupActivity"></activity>
-        <activity android:name=".ui.sellPage.AddItemActivity"></activity>
-        <activity android:name=".ui.searchPage.FilterActivity"></activity>
-        <activity android:name=".ui.searchPage.FeedActivity"></activity>
+        <activity android:name=".ui.loginPage.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.feedPage.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.itemPage.ItemPageActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.loginPage.SignupActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.sellPage.AddItemActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.searchPage.FilterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.searchPage.FeedActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

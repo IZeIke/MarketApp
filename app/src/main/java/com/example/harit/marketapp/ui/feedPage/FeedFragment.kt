@@ -37,6 +37,7 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showLoading()
 
         val db = FirebaseFirestore.getInstance()
 
@@ -66,7 +67,18 @@ class FeedFragment : Fragment() {
             feedRecyclerView.layoutManager = GridLayoutManager(context,2)
             feedRecyclerView.addItemDecoration(GridItemSpacingDecoration(2,20,true))
             feedRecyclerView.adapter = FeedPageAdapter(context!!, feedList)
+            stopLoading()
         }
+    }
+
+    private fun showLoading(){
+        loading.visibility = View.VISIBLE
+        feedRecyclerView.visibility = View.GONE
+    }
+
+    private fun stopLoading(){
+        loading.visibility = View.GONE
+        feedRecyclerView.visibility = View.VISIBLE
     }
 
 }
