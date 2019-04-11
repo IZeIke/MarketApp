@@ -23,6 +23,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/loading"
+            style="@style/SpinKitView.FadingCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:SpinKit_Color="@color/light_sea_green"
+            android:background="#FAFAFA"
+            android:visibility="gone"
+            />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

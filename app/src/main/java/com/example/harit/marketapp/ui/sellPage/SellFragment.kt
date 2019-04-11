@@ -12,6 +12,7 @@ import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
+import com.example.harit.marketapp.ui.adapter.SellItemPageAdapter
 import com.example.harit.marketapp.ui.model.FeedItem
 import com.example.harit.marketapp.ui.model.SearchModel
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
@@ -60,6 +61,7 @@ class SellFragment : Fragment() {
     }
 
     private fun getData() {
+        showLoading()
 
         var uid = FirebaseAuth.getInstance().currentUser?.uid
         var db = FirebaseFirestore.getInstance().collection("Feed")
@@ -102,10 +104,21 @@ class SellFragment : Fragment() {
             if(it.itemDecorationCount == 0){
                 it.addItemDecoration(GridItemSpacingDecoration(2,20,true))
             }
-            it.adapter = FeedPageAdapter(it.context, feedList)
+            it.adapter = SellItemPageAdapter(it.context, feedList)
             it.adapter?.notifyDataSetChanged()
+            stopLoading()
             //swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun showLoading(){
+        loading.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+    }
+
+    private fun stopLoading(){
+        loading.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 
 }

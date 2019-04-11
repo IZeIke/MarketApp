@@ -6,6 +6,6 @@ class Type {
         public val COMP = "comp"
         public val HALF = "half"
         public val FULL = "full"
-        public val CLOSEUP = "closeup"
+        public val CLOSEUP = "close-up"
     }
 }
