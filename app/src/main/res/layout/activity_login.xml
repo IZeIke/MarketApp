@@ -4,8 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     tools:context=".ui.loginPage.LoginActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/loading"
+        style="@style/SpinKitView.FadingCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:SpinKit_Color="@color/light_sea_green"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in"
+        android:fontFamily="@font/futura_bold_font"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/loginContainer"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"
+        />
 
     <LinearLayout
         android:id="@+id/loginContainer"
@@ -23,15 +46,15 @@
             android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:hintTextAppearance="@style/Base.Widget.MaterialComponents.TextInputLayout.HintText"
-            app:boxStrokeColor="@color/white"
+            app:boxStrokeColor="@color/black"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textCursorDrawable="@null"
-                android:textColor="@color/white"
-                android:hint="Username"
+                android:textColor="@color/black"
+                android:hint="Email"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,14 +67,14 @@
             android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:hintTextAppearance="@style/Base.Widget.MaterialComponents.TextInputLayout.HintText"
-            app:boxStrokeColor="@color/white"
+            app:boxStrokeColor="@color/black"
             >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textCursorDrawable="@null"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:inputType="textPassword"
             android:hint="Password"
             />
@@ -67,23 +90,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:text="Login"
+            android:text="sign in"
             android:textColor="@color/white"
             />
 
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/signUpBtn"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/loginContainer"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/loginContainer"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:text="Sign Up"
-        />
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="New Member? "
+            />
+
+        <TextView
+            android:id="@+id/signUpBtn"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="Sign Up!"
+            />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

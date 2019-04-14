@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_above="@id/editTextHolder"
+        android:id="@+id/chatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/editTextHolder"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_toLeftOf="@id/ic"
+            android:id="@+id/editText"
+            android:background="@drawable/edt_oval"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:hint="Type a message..."
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/ic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_send_black_24dp"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.MainPageAdapter
+import com.example.harit.marketapp.ui.chatPage.ChatActivity
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.example.harit.marketapp.ui.model.SearchModel
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
@@ -67,6 +68,10 @@ class MarketViewpagerFragment : Fragment() {
             }
             startActivity(Intent(context,FilterActivity::class.java)
                     .putExtras(bundle))
+        }
+
+        topBar.getChatHolder()?.setOnClickListener {
+            startActivity(Intent(context,ChatActivity::class.java))
         }
     }
 
