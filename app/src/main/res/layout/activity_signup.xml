@@ -7,6 +7,17 @@
     android:background="@color/white"
     tools:context=".ui.loginPage.SignupActivity">
 
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/loading"
+        style="@style/SpinKitView.FadingCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:SpinKit_Color="@color/light_sea_green"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

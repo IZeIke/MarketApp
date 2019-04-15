@@ -3,6 +3,7 @@ package com.example.harit.marketapp.ui.loginPage
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.harit.marketapp.Application
 import com.example.harit.marketapp.R
@@ -40,16 +41,24 @@ class SignupActivity : AppCompatActivity() {
 
             if(email && password && passwordConfirm) {
 
+                showLoading()
+
                 mAuth.createUserWithEmailAndPassword(emailEdt.text.toString(), passwordEdt.text.toString())
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 user.put("id", it.result.user.uid)
-                                FirebaseFirestore.getInstance().collection("Users").document(it.result.user.uid)
-                                        .set(user).addOnSuccessListener {
-                                            startActivity(Intent(this, MainActivity::class.java))
-                                            finishAffinity()
-                                        }
+                                FirebaseFirestore.getInstance().collection("Users").get().addOnCompleteListener {task ->
+                                    if(task.isSuccessful) {
+                                        user.put("nid", task.result.size() + 1)
+                                        FirebaseFirestore.getInstance().collection("Users").document(it.result.user.uid)
+                                                .set(user).addOnSuccessListener {
+                                                    startActivity(Intent(this, MainActivity::class.java))
+                                                    finishAffinity()
+                                                }
+                                    }
+                                }
                             } else {
+                                stopLoading()
                                 Toast.makeText(this,"failed to sign up",Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -69,5 +78,15 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showLoading(){
+        loading.visibility = View.VISIBLE
+        signupContainer.visibility = View.INVISIBLE
+    }
+
+    private fun stopLoading(){
+        loading.visibility = View.GONE
+        signupContainer.visibility = View.VISIBLE
     }
 }
