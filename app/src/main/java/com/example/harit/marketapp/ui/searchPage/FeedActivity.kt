@@ -24,7 +24,7 @@ class FeedActivity : AppCompatActivity() {
     lateinit var model : SearchModel
     lateinit var dbRef: Query
     var lastVisible : DocumentSnapshot? = null
-    private val feedList : MutableList<FeedItem> = arrayListOf()
+    private val feedList : MutableList<FeedModel> = arrayListOf()
     private var clickBar = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +90,7 @@ class FeedActivity : AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedItem::class.java)
+                        val feedItem = document.toObject(FeedModel::class.java)
                         feedList.add(feedItem)
                     }
 
@@ -109,7 +109,7 @@ class FeedActivity : AppCompatActivity() {
                 }
     }
 
-    private fun setRecyclerView(feedList: MutableList<FeedItem>) {
+    private fun setRecyclerView(feedList: MutableList<FeedModel>) {
         feedRecyclerView?.let {
             var layoutManager = GridLayoutManager(this,2)
             feedRecyclerView.layoutManager = layoutManager
@@ -132,7 +132,7 @@ class FeedActivity : AppCompatActivity() {
 
     private fun getDataLoadMore() {
 
-        val feedList = mutableListOf<FeedItem>()
+        val feedList = mutableListOf<FeedModel>()
         dbRef.whereEqualTo("filter.photosetType",model.format)
                 .startAfter(lastVisible!!)
                 .limit(20)
@@ -140,7 +140,7 @@ class FeedActivity : AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedItem::class.java)
+                        val feedItem = document.toObject(FeedModel::class.java)
                         feedList.add(feedItem)
                     }
 

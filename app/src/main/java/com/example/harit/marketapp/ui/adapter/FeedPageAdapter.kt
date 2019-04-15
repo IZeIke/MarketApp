@@ -10,10 +10,11 @@ import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.itemPage.ItemPageActivity
 import com.example.harit.marketapp.ui.model.FeedItem
+import com.example.harit.marketapp.ui.model.FeedModel
 import com.robertlevonyan.components.picker.set
 import kotlinx.android.synthetic.main.view_item_feed.view.*
 
-class FeedPageAdapter(val context: Context, private val feedList: MutableList<FeedItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FeedPageAdapter(val context: Context, private val feedList: MutableList<FeedModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -24,7 +25,7 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
         return feedList.size
     }
 
-    fun addList(list : MutableList<FeedItem>){
+    fun addList(list : MutableList<FeedModel>){
         for(item in list){
             feedList.add(item)
         }
@@ -50,6 +51,7 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
 
             holder.cardView.setOnClickListener {
                 val intent = Intent(context,ItemPageActivity::class.java)
+                intent.putExtra("item",feedList[position])
                 context.startActivity(intent)
             }
         }

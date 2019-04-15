@@ -4,18 +4,23 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_toRightOf="@id/profile_image"
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20-03-2019 16:14"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="90dp"
         android:layout_marginBottom="2dp"
         />
 
+    <RelativeLayout
+        android:id="@+id/chatHolder"
+        android:layout_below="@id/timeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_below="@id/timeText"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_width="50dp"
@@ -25,14 +30,12 @@
         />
 
     <TextView
-        android:layout_below="@id/timeText"
         android:layout_toRightOf="@id/profile_image"
         android:id="@+id/textChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="test123jkjkjkjkjkjkjkjkjfffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        android:textSize="20sp"
+        android:text="test123jkjkjkjkjkjkjkjkjfffffffffffffffffffffffff"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/text_chat_2"
@@ -42,5 +45,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/black"
         />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -11,13 +11,14 @@ import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
 import com.example.harit.marketapp.ui.model.FeedItem
+import com.example.harit.marketapp.ui.model.FeedModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : Fragment() {
 
-    private val feedList : MutableList<FeedItem> = arrayListOf()
+    private val feedList : MutableList<FeedModel> = arrayListOf()
 
     companion object {
         fun newInstance(): FeedFragment{
@@ -47,7 +48,7 @@ class FeedFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedItem::class.java)
+                        val feedItem = document.toObject(FeedModel::class.java)
                         feedList.add(feedItem)
                     }
 
@@ -62,7 +63,7 @@ class FeedFragment : Fragment() {
 
     }
 
-    private fun setRecyclerView(feedList: MutableList<FeedItem>) {
+    private fun setRecyclerView(feedList: MutableList<FeedModel>) {
         feedRecyclerView?.let {
             feedRecyclerView.layoutManager = GridLayoutManager(context,2)
             feedRecyclerView.addItemDecoration(GridItemSpacingDecoration(2,20,true))

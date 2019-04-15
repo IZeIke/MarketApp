@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.Subscribe
 class StepEndFragment : Fragment() , BlockingStep {
 
     private val filter = hashMapOf<String,String>()
-    private var user = hashMapOf<String,String>()
+    private var user = hashMapOf<String,Any>()
     private var uriList = mutableListOf<Uri>()
 
 
@@ -43,20 +43,20 @@ class StepEndFragment : Fragment() , BlockingStep {
 
     override fun onCompleteClicked(callback: StepperLayout.OnCompleteClickedCallback?) {
 
-        var imageList = ArrayList<String>()
+        var imageList = Array<String>(uriList.size){""}
+        /*var i = 0
 
-        for ((i,uri) in uriList.withIndex()) {
+        while (i < uriList.size){
+            val imageName = "${System.currentTimeMillis()}${uriList[i].lastPathSegment}"
 
-            val imageName = "${System.currentTimeMillis()}${uri.lastPathSegment}"
-
-            FirebaseStorage.getInstance().reference.child("images/$imageName").putFile(uri)
+            FirebaseStorage.getInstance().reference.child("images/$imageName").putFile(uriList[i])
                     .addOnSuccessListener {
-                        if(i == uriList.size - 1) {
+                        if (i == uriList.size - 1) {
                             FirebaseStorage.getInstance()
                                     .reference.child("images/$imageName")
                                     .downloadUrl.addOnCompleteListener {
-                                imageList.add(i,it.result.toString())
-                                      //  .put(i,it.result.toString())
+                                imageList.add(i, it.result.toString())
+                                //  .put(i,it.result.toString())
                                 val feedItem = FeedItem()
                                 feedItem.filter = filter
                                 feedItem.name = nameEdt.text.toString()
@@ -73,12 +73,53 @@ class StepEndFragment : Fragment() , BlockingStep {
                                             activity?.onBackPressed()
                                         }
                             }
+                        } else {
+                            FirebaseStorage.getInstance()
+                                    .reference.child("images/$imageName")
+                                    .downloadUrl.addOnCompleteListener {
+                                //imageList.put(i,it.result.toString())
+                                imageList.add(i, it.result.toString())
+                                i++
+                                //imageList[i] = it.result.toString()
+                            }
+                        }
+                    }
+        }*/
+
+        for ((i,uri) in uriList.withIndex()) {
+
+            val imageName = "${System.currentTimeMillis()}${uri.lastPathSegment}"
+
+            FirebaseStorage.getInstance().reference.child("images/$imageName").putFile(uri)
+                    .addOnSuccessListener {
+                        if(i == uriList.size - 1) {
+                            FirebaseStorage.getInstance()
+                                    .reference.child("images/$imageName")
+                                    .downloadUrl.addOnCompleteListener {
+                                imageList[i] = it.result.toString()
+                                      //  .put(i,it.result.toString())
+                                val feedItem = FeedItem()
+                                feedItem.filter = filter
+                                feedItem.name = nameEdt.text.toString()
+                                feedItem.description = descriptionEdt.text.toString()
+                                feedItem.price = priceEdt.text.toString().toInt()
+                                feedItem.status = "instock"
+                                feedItem.payment = paymentEdt.text.toString()
+                                feedItem.shipping = shippingEdt.text.toString()
+                                feedItem.imageUrl = imageList.toCollection(ArrayList())
+                                feedItem.user = user
+
+                                FirebaseFirestore.getInstance().collection("Feed")
+                                        .document().set(feedItem).addOnCompleteListener {
+                                            activity?.onBackPressed()
+                                        }
+                            }
                         }else{
                             FirebaseStorage.getInstance()
                                     .reference.child("images/$imageName")
                                     .downloadUrl.addOnCompleteListener {
                                 //imageList.put(i,it.result.toString())
-                                imageList.add(i,it.result.toString())
+                                imageList[i] = it.result.toString()
                                 //imageList[i] = it.result.toString()
                             }
                         }
@@ -132,7 +173,7 @@ class StepEndFragment : Fragment() , BlockingStep {
         FirebaseFirestore.getInstance().collection("Users")
                 .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
                 .addOnCompleteListener {
-                    user = it.result.data as HashMap<String, String>
+                    user = it.result.data as HashMap<String, Any>
                 }
     }
 

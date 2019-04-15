@@ -59,6 +59,7 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.chatPage.ChatActivity"
             android:configChanges="orientation"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"></activity>
     </application>
 

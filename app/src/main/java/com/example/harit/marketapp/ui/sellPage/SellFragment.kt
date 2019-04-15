@@ -76,7 +76,8 @@ class SellFragment : Fragment() {
                         feedList.add(feedItem)
                     }
 
-                    lastVisible = result.documents[result.size() - 1]
+                    if(result.size() != 0)
+                        lastVisible = result.documents[result.size() - 1]
 
                     setRecyclerView(feedList)
                     if(feedList.size == 0){

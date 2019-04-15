@@ -11,13 +11,16 @@
         >
 
         <ImageView
+            android:id="@+id/itemImage"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="400dp"
             android:src="@drawable/mockup"
+            android:background="@color/white"
             android:scaleType="fitCenter"
             />
 
         <TextView
+            android:id="@+id/itemPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿Sample"
@@ -30,6 +33,7 @@
             />
 
         <TextView
+            android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -40,6 +44,7 @@
             />
 
         <TextView
+            android:id="@+id/itemDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -55,6 +60,7 @@
 
             <TextView
                 android:layout_toRightOf="@id/profile_image"
+                android:id="@+id/sellerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -89,6 +95,7 @@
         >
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/chatButton"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/orange"
             android:layout_width="match_parent"

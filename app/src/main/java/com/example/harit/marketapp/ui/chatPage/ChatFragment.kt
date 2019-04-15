@@ -1,46 +1,61 @@
 package com.example.harit.marketapp.ui.chatPage
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.ui.adapter.ChatPageAdapter
 import com.example.harit.marketapp.ui.model.Chat
 import com.example.harit.marketapp.ui.model.ChatModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_chat.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.robertlevonyan.components.picker.set
 
 
 class ChatFragment: Fragment() {
 
-    private var myUser = hashMapOf<String,String>()
+    //private var myUser = hashMapOf<String,String>()
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
     private val mRootRef = FirebaseDatabase.getInstance().reference
     private val mMessagesRef = mRootRef.child("messages")
-    private var chatId : String = "1_6"
+    private var chatId : String = ""
+    private var firstLock = true
 
     companion object {
-        fun newInstance(): ChatFragment {
+        fun newInstance(chatId : String): ChatFragment {
             var view = ChatFragment()
+            view.arguments = Bundle().also {
+                it.putString("chatId",chatId)
+            }
             return view
         }
+    }
+
+    interface ChatFragmentInterface {
+        fun closeKeyboard()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        FirebaseFirestore.getInstance().collection("Users")
+        chatId = arguments?.getString("chatId")!!
+
+        /*FirebaseFirestore.getInstance().collection("Users")
                 .document(uid!!).get()
                 .addOnCompleteListener {
                     myUser = it.result.data as HashMap<String, String>
                     //chatId = getChatId((myUser["nid"] as Long).toInt() , 1)
-                }
+                }*/
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,6 +64,9 @@ class ChatFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var myRecyclerView = recyclerView
+        var lastKey = ""
 
         ic.setOnClickListener {
             if (editText.text.toString().trim().isEmpty())
@@ -61,10 +79,12 @@ class ChatFragment: Fragment() {
                     chatModel.mediaUrl = ""
                     chatModel.message = editText.text.toString()
                     chatModel.messageType = "TEXT"
-                    chatModel.senderId = myUser["id"] as String
+                    chatModel.senderId = uid
                     chatModel.messageId = key
                     chatModel.create = ServerValue.TIMESTAMP
                 }
+                editText.set("")
+                //(activity as ChatFragmentInterface).closeKeyboard()
                 mMessagesRef.child(chatId).child(key).setValue(chatModel)
             }
         }
@@ -83,9 +103,17 @@ class ChatFragment: Fragment() {
             }
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Toast.makeText(context, "add messages.",
-                        Toast.LENGTH_SHORT).show()
-                val chat = dataSnapshot.getValue(Chat::class.java)
+                /*Toast.makeText(context, "add messages.",
+                        Toast.LENGTH_SHORT).show()*/
+                if(!firstLock){
+                    val chat = dataSnapshot.getValue(Chat::class.java)
+                    Log.d("chat",chat?.message)
+                    (myRecyclerView.adapter as ChatPageAdapter).addList(chat!!)
+                    myRecyclerView.smoothScrollToPosition(myRecyclerView.adapter?.itemCount!! - 1)
+                }else{
+                    firstLock = false
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -93,12 +121,47 @@ class ChatFragment: Fragment() {
             }
         }
 
-        mMessagesRef.child(chatId).addChildEventListener(childEventListener)
+        mMessagesRef.child(chatId).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
 
-        recyclerView.let {
-            it.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,true)
-            //it.adapter = FeedPageAdapter(context!!, chatList)
-        }
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                var chatList = mutableListOf<Chat>()
+                for(data in p0.children){
+                    val chat = data.getValue(Chat::class.java)
+                    chatList.add(chat!!)
+                    Log.d("chat",chat.message)
+                    lastKey = chat?.messageId!!
+                }
+
+                myRecyclerView.let {
+                    it.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false).also { layoutManager ->
+                        layoutManager.stackFromEnd = true
+                    }
+                    it.adapter = ChatPageAdapter(context!!,uid!!,chatList)
+                    it.adapter?.notifyDataSetChanged()
+                }
+
+                mMessagesRef.child(chatId).orderByKey()
+                        .startAt(lastKey).addChildEventListener(childEventListener)
+            }
+
+        })
+
+        /*mMessagesRef.child(chatId).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(data in p0.children){
+                    val chat = data.getValue(Chat::class.java)
+                    Log.d("chat",chat?.message)
+                }
+            }
+
+        })*/
 
     }
 

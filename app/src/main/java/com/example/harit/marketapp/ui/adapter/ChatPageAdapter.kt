@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
-import com.example.harit.marketapp.ui.model.ChatModel
+import com.example.harit.marketapp.ui.model.Chat
+import kotlinx.android.synthetic.main.view_item_chat_2.view.*
 
-class ChatPageAdapter(val context: Context,val myUid: String, private val chatList: MutableList<ChatModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatPageAdapter(val context: Context,val myUid: String, private val chatList: MutableList<Chat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -31,28 +32,23 @@ class ChatPageAdapter(val context: Context,val myUid: String, private val chatLi
         return chatList.size
     }
 
-    fun addList(list: MutableList<ChatModel>) {
-        for (item in list) {
-            chatList.add(item)
-        }
+    fun addList(item: Chat) {
+
+        chatList.add(item)
+
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ChatViewHolder) {
-
+            holder.message.text = chatList[position].message
         }
     }
 
     class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /* var cardView = itemView.cardView
-        var imageView = itemView.imageView
-        var tvName = itemView.textName
-        var tvPrice = itemView.textPrice
-        var nameTag = itemView.name
-        var photosetTypeTag = itemView.photosetType
-        var typeTag = itemView.type
-        var setTag = itemView.set*/
+        var message = itemView.textChat
+        var timeText = itemView.timeText
     }
+
 
 }

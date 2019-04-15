@@ -4,14 +4,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_toRightOf="@id/profile_image"
         android:id="@+id/timeText"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="20-03-2019 16:14"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="7dp"
         />
 
     <TextView
@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="test123jkjkjkjkjkjkjkjkj"
-        android:textSize="20sp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:background="@drawable/text_chat_1"
