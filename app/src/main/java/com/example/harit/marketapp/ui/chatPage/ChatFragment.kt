@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.ChatPageAdapter
 import com.example.harit.marketapp.ui.model.Chat
 import com.example.harit.marketapp.ui.model.ChatModel
@@ -86,6 +87,7 @@ class ChatFragment: Fragment() {
                 editText.set("")
                 //(activity as ChatFragmentInterface).closeKeyboard()
                 mMessagesRef.child(chatId).child(key).setValue(chatModel)
+                
             }
         }
 
@@ -105,14 +107,22 @@ class ChatFragment: Fragment() {
             override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
                 /*Toast.makeText(context, "add messages.",
                         Toast.LENGTH_SHORT).show()*/
-                if(!firstLock){
+               /* if(myRecyclerView.adapter?.itemCount!! == 0){
                     val chat = dataSnapshot.getValue(Chat::class.java)
                     Log.d("chat",chat?.message)
                     (myRecyclerView.adapter as ChatPageAdapter).addList(chat!!)
-                    myRecyclerView.smoothScrollToPosition(myRecyclerView.adapter?.itemCount!! - 1)
-                }else{
-                    firstLock = false
-                }
+                    //myRecyclerView.smoothScrollToPosition(myRecyclerView.adapter?.itemCount!! - 1)
+                }else{*/
+                    if(!firstLock){
+                        val chat = dataSnapshot.getValue(Chat::class.java)
+                        Log.d("chat",chat?.message)
+                        (myRecyclerView.adapter as ChatPageAdapter).addList(chat!!)
+                        myRecyclerView.smoothScrollToPosition(myRecyclerView.adapter?.itemCount!! - 1)
+                    }else{
+                        firstLock = false
+                    }
+               // }
+
 
             }
 
@@ -123,7 +133,7 @@ class ChatFragment: Fragment() {
 
         mMessagesRef.child(chatId).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-
+                p0.message.Toast(activity!!)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -143,8 +153,13 @@ class ChatFragment: Fragment() {
                     it.adapter?.notifyDataSetChanged()
                 }
 
-                mMessagesRef.child(chatId).orderByKey()
-                        .startAt(lastKey).addChildEventListener(childEventListener)
+                if(chatList.size == 0){
+                    firstLock = false
+                    mMessagesRef.child(chatId).addChildEventListener(childEventListener)
+                }else {
+                    mMessagesRef.child(chatId).orderByKey()
+                            .startAt(lastKey).addChildEventListener(childEventListener)
+                }
             }
 
         })
