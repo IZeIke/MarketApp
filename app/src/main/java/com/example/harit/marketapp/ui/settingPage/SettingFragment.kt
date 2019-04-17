@@ -10,8 +10,10 @@ import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.feedPage.MainActivity
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.example.harit.marketapp.ui.model.SearchModel
+import com.example.harit.marketapp.ui.model.User
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_setting.*
 
 class SettingFragment : Fragment() {
@@ -35,12 +37,23 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setTopBar()
 
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
+                .addOnCompleteListener {
+                    var myUser = it.result.toObject(User::class.java)
+                    initInstance(myUser)
+                }
+
         logOutBtn.setOnClickListener {
             FirebaseAuth.getInstance().signOut().also {
                 startActivity(Intent(activity, LoginActivity::class.java))
                 (activity as MainActivity).finish()
             }
         }
+    }
+
+    private fun initInstance(myUser: User?) {
+        userName.text = myUser?.name
     }
 
     private fun setTopBar() {

@@ -12,6 +12,7 @@ import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.MainPageAdapter
 import com.example.harit.marketapp.ui.chatPage.ChatActivity
+import com.example.harit.marketapp.ui.chatPage.ChatListActivity
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.example.harit.marketapp.ui.model.SearchModel
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
@@ -71,7 +72,7 @@ class MarketViewpagerFragment : Fragment() {
         }
 
         topBar.getChatHolder()?.setOnClickListener {
-            startActivity(Intent(context,ChatActivity::class.java))
+            startActivity(Intent(context,ChatListActivity::class.java))
         }
     }
 

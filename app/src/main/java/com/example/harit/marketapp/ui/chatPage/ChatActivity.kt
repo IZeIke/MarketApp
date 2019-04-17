@@ -8,6 +8,7 @@ import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_chat.*
 
 class ChatActivity : AppCompatActivity(),ChatFragment.ChatFragmentInterface {
 
@@ -35,16 +36,27 @@ class ChatActivity : AppCompatActivity(),ChatFragment.ChatFragmentInterface {
                     .addOnCompleteListener {
                         var myUser = it.result.toObject(User::class.java)
                         var chatId = getChatId(myUser?.nid!! , user.nid!!)
+                        var bundle = Bundle().also {
+                            it.putString("chatId",chatId)
+                            it.putParcelable("user",user)
+                        }
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.contentContainer,ChatFragment.newInstance(chatId))
+                                .add(R.id.contentContainer,ChatFragment.newInstance(bundle))
                                 .commit()
                     }
 
         }
     }
 
-    private fun initInstance() {
+    private fun setTopbar() {
+        topBar.haveNoti(false)
+        topBar.haveSearch(false)
+        topBar.setText(user.name!!)
+        topBar.haveBack(true)
+    }
 
+    private fun initInstance() {
+        setTopbar()
     }
 
 

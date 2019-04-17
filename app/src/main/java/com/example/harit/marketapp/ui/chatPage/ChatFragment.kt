@@ -1,13 +1,10 @@
 package com.example.harit.marketapp.ui.chatPage
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,11 +12,13 @@ import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.ChatPageAdapter
 import com.example.harit.marketapp.ui.model.Chat
+import com.example.harit.marketapp.ui.model.ChatListModel
 import com.example.harit.marketapp.ui.model.ChatModel
+import com.example.harit.marketapp.ui.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_chat.*
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_chat.*
 import com.robertlevonyan.components.picker.set
 
 
@@ -29,15 +28,15 @@ class ChatFragment: Fragment() {
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
     private val mRootRef = FirebaseDatabase.getInstance().reference
     private val mMessagesRef = mRootRef.child("messages")
+    private val fireStoreRef = FirebaseFirestore.getInstance()
     private var chatId : String = ""
+    lateinit var user : User
     private var firstLock = true
 
     companion object {
-        fun newInstance(chatId : String): ChatFragment {
+        fun newInstance(bundle: Bundle): ChatFragment {
             var view = ChatFragment()
-            view.arguments = Bundle().also {
-                it.putString("chatId",chatId)
-            }
+            view.arguments = bundle
             return view
         }
     }
@@ -49,7 +48,10 @@ class ChatFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         chatId = arguments?.getString("chatId")!!
+        user = arguments?.getParcelable("user")!!
+
 
         /*FirebaseFirestore.getInstance().collection("Users")
                 .document(uid!!).get()
@@ -65,6 +67,8 @@ class ChatFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showLoading()
 
         var myRecyclerView = recyclerView
         var lastKey = ""
@@ -86,8 +90,14 @@ class ChatFragment: Fragment() {
                 }
                 editText.set("")
                 //(activity as ChatFragmentInterface).closeKeyboard()
+                var chatList = ChatListModel().also { chatListModel ->
+                    chatListModel.user = user
+                    chatListModel.message = chatModel.message
+                    chatListModel.messageType = chatModel.messageType
+                }
                 mMessagesRef.child(chatId).child(key).setValue(chatModel)
-                
+                fireStoreRef.collection("ChatList").document("chatList")
+                        .collection(uid!!).document(user.id!!).set(chatList)
             }
         }
 
@@ -133,10 +143,12 @@ class ChatFragment: Fragment() {
 
         mMessagesRef.child(chatId).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
+                stopLoading()
                 p0.message.Toast(activity!!)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                stopLoading()
                 var chatList = mutableListOf<Chat>()
                 for(data in p0.children){
                     val chat = data.getValue(Chat::class.java)
@@ -186,6 +198,16 @@ class ChatFragment: Fragment() {
         }else{
             j.toString()+"_"+i.toString()
         }
+    }
+
+    private fun showLoading(){
+        loading.visibility = View.VISIBLE
+        recyclerView.visibility = View.INVISIBLE
+    }
+
+    private fun stopLoading(){
+        loading.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 
 }

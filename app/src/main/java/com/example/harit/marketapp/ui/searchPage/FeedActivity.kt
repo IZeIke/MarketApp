@@ -162,6 +162,7 @@ class FeedActivity : AppCompatActivity() {
             it.haveNoti(false)
             it.haveSearch(false)
             it.haveFilter(true)
+            it.haveBack(true)
             it.getFilterHolder()?.setOnClickListener {
                 if(!clickBar) {
                     clickBar = true

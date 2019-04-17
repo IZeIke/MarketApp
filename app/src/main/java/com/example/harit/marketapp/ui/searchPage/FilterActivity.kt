@@ -259,8 +259,9 @@ class FilterActivity : AppCompatActivity() {
     private fun setTopBar() {
         topBar?.let {
             it.haveSearch(false)
-            it.setText("Search")
+            it.setText("Filter")
             it.haveNoti(false)
+            it.haveBack(true)
         }
 
     }

@@ -47,6 +47,20 @@ class MarketAppbar @JvmOverloads constructor(
         }
     }
 
+    fun haveChat(boolean: Boolean){
+        if (!boolean){
+            chatIc.visibility = View.GONE
+            chatNoti.visibility = View.GONE
+        }
+    }
+
+    fun haveBack(boolean: Boolean){
+        if(boolean){
+            backHolder.visibility = View.VISIBLE
+            backHolder.visibility = View.VISIBLE
+        }
+    }
+
     fun haveNoti(boolean: Boolean)
     {
         if(!boolean){
