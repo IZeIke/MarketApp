@@ -18,6 +18,7 @@ import com.example.harit.marketapp.ui.searchPage.FilterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_sell.*
 
 class SellFragment : Fragment() {
@@ -65,7 +66,8 @@ class SellFragment : Fragment() {
         var uid = FirebaseAuth.getInstance().currentUser?.uid
         var db = FirebaseFirestore.getInstance().collection("Feed")
 
-        db.whereEqualTo("user.id",uid)
+        db.orderBy("create", Query.Direction.DESCENDING)
+                .whereEqualTo("user.id",uid)
                 .limit(20)
                 .get()
                 .addOnSuccessListener { result ->
@@ -88,6 +90,7 @@ class SellFragment : Fragment() {
                 }
                 .addOnFailureListener { exception ->
                     Log.d("document-error", "Error getting documents: ", exception)
+                    stopLoading()
                 }
 
     }

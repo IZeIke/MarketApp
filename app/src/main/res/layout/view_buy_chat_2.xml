@@ -46,6 +46,7 @@
             android:textColor="@color/black"
             />-->
         <RelativeLayout
+            android:id="@+id/holder"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/profile_image"
             android:layout_marginRight="30dp"

@@ -19,15 +19,20 @@ import kotlinx.android.synthetic.main.fragment_setting.*
 
 class SettingFragment : Fragment() {
 
+    lateinit var myUser : User
+
     companion object {
         fun newInstance(bundle: Bundle): SettingFragment {
             val fragment = SettingFragment()
+            fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        myUser = arguments?.getParcelable("myUser")!!
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,12 +43,12 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setTopBar()
 
-        FirebaseFirestore.getInstance().collection("Users")
+        /*FirebaseFirestore.getInstance().collection("Users")
                 .document(FirebaseAuth.getInstance().currentUser?.uid!!).get()
                 .addOnCompleteListener {
-                    var myUser = it.result.toObject(User::class.java)
+                    var myUser = it.result.toObject(User::class.java)*/
                     initInstance(myUser)
-                }
+                //}
 
         logOutBtn.setOnClickListener {
             FirebaseAuth.getInstance().signOut().also {
