@@ -1,36 +1,62 @@
 package com.example.harit.marketapp.ui.itemPage
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.chatPage.ChatActivity
-import com.example.harit.marketapp.ui.model.FeedItem
-import com.example.harit.marketapp.ui.model.FeedModel
+import com.example.harit.marketapp.ui.model.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_item.*
 
 class ItemPageActivity : AppCompatActivity() {
 
     lateinit var feedItem: FeedModel
+    var lock = true
+    var myUser: User? = null
+    val db = FirebaseFirestore.getInstance()
     var uid = FirebaseAuth.getInstance().currentUser?.uid
+    private val mRootRef = FirebaseDatabase.getInstance().reference
+    private val mMessagesRef = mRootRef.child("messages")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
 
         feedItem = intent.getParcelableExtra("item")
+        //myUser = intent.getParcelableExtra("user")
+
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(uid!!).get()
+                .addOnCompleteListener {
+                    myUser = it.result.toObject(User::class.java)
+                }
+
+        FirebaseFirestore.getInstance().collection("Book")
+                .document(feedItem.id!!).get()
+                .addOnCompleteListener {
+                    if(it.result.get("id") != null){
+                        textBuyBtn.text = "จองแล้ว"
+                        chatBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+                        chatBtn.isClickable = false
+                    }
+                    if(uid != feedItem.user?.id){
+                        tabHolder.visibility = View.VISIBLE
+                    }
+                }
 
         initInstance()
     }
 
     private fun initInstance() {
-
-        if(uid == feedItem.user?.id){
-            chatBtn.visibility = View.GONE
-        }
 
         sellerName.text = feedItem.user?.name
         itemImage.setImageUrl(feedItem.imageUrl!![0])
@@ -40,6 +66,78 @@ class ItemPageActivity : AppCompatActivity() {
 
         chatButton.setOnClickListener {
             startActivity(Intent(this, ChatActivity::class.java).putExtra("user",feedItem.user))
+        }
+
+        chatBtn.setOnClickListener {
+            if(lock){
+                lock = false
+                textBuyBtn.text = "จองแล้ว"
+                chatBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+                chatBtn.isClickable = false
+
+            if(feedItem.status == "instock"){
+                feedItem.status = "1"
+            }else{
+                feedItem.status = (feedItem.status?.toInt()!! + 1).toString()
+            }
+            val book = HashMap<String, Any>()
+            book["id"] = feedItem.id!!
+
+            val batch = db.batch()
+
+            var bookRef = db.collection("Book").document(feedItem.id!!)
+
+            batch.set(bookRef,book)
+
+            var updateRef = db.collection("Feed").document(feedItem.id!!)
+
+            batch.update(updateRef,"status",feedItem.status)
+
+            batch.commit().addOnCompleteListener {
+                if(it.isSuccessful) {
+
+                    var chatId = getChatId(myUser?.nid!!, feedItem.user?.nid!!)
+                    var key = mMessagesRef.child(chatId).push().key!!
+                    var chatModel = ChatModel().also { chatModel ->
+                        chatModel.chatId = chatId
+                        chatModel.mediaUrl = feedItem.imageUrl!![0]
+                        chatModel.message = "${feedItem.name}_${myUser?.name} จองเป็นคิวที่ ${feedItem.status}"
+                        chatModel.messageType = feedItem.id
+                        chatModel.senderId = uid
+                        chatModel.messageId = key
+                        chatModel.create = ServerValue.TIMESTAMP
+                    }
+                    //(activity as ChatFragmentInterface).closeKeyboard()
+                    var chatList = ChatListModel().also { chatListModel ->
+                        chatListModel.user = feedItem.user
+                        chatListModel.message = chatModel.message
+                        chatListModel.messageType = chatModel.messageType
+                    }
+
+                    var myChatList = ChatListModel().also { chatListModel ->
+                        chatListModel.user = myUser
+                        chatListModel.message = chatModel.message
+                        chatListModel.messageType = chatModel.messageType
+                    }
+
+                    mMessagesRef.child(chatId).child(key).setValue(chatModel)
+                    db.collection("ChatList").document("chatList")
+                            .collection(feedItem.user?.id!!).document(uid!!).set(myChatList)
+                    db.collection("ChatList").document("chatList")
+                            .collection(uid!!).document(feedItem.user?.id!!).set(chatList)
+
+                    startActivity(Intent(this, ChatActivity::class.java).putExtra("item", feedItem))
+                }
+                }
+            }
+        }
+    }
+
+    private fun getChatId(i: Int, j: Int): String {
+        return if(i < j){
+            i.toString()+"_"+j.toString()
+        }else{
+            j.toString()+"_"+i.toString()
         }
     }
 

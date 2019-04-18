@@ -31,6 +31,7 @@ class ChatFragment: Fragment() {
     private val fireStoreRef = FirebaseFirestore.getInstance()
     private var chatId : String = ""
     lateinit var user : User
+    lateinit var myUser : User
     private var firstLock = true
 
     companion object {
@@ -51,6 +52,7 @@ class ChatFragment: Fragment() {
 
         chatId = arguments?.getString("chatId")!!
         user = arguments?.getParcelable("user")!!
+        myUser = arguments?.getParcelable("myUser")!!
 
 
         /*FirebaseFirestore.getInstance().collection("Users")
@@ -95,7 +97,16 @@ class ChatFragment: Fragment() {
                     chatListModel.message = chatModel.message
                     chatListModel.messageType = chatModel.messageType
                 }
+
+                var myChatList = ChatListModel().also { chatListModel ->
+                    chatListModel.user = myUser
+                    chatListModel.message = chatModel.message
+                    chatListModel.messageType = chatModel.messageType
+                }
+
                 mMessagesRef.child(chatId).child(key).setValue(chatModel)
+                fireStoreRef.collection("ChatList").document("chatList")
+                        .collection(user.id!!).document(uid!!).set(myChatList)
                 fireStoreRef.collection("ChatList").document("chatList")
                         .collection(uid!!).document(user.id!!).set(chatList)
             }
@@ -161,7 +172,7 @@ class ChatFragment: Fragment() {
                     it.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false).also { layoutManager ->
                         layoutManager.stackFromEnd = true
                     }
-                    it.adapter = ChatPageAdapter(context!!,uid!!,chatList)
+                    it.adapter = ChatPageAdapter(activity!!,uid!!,chatList)
                     it.adapter?.notifyDataSetChanged()
                 }
 

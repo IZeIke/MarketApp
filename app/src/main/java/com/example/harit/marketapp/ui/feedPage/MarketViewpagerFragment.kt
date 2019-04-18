@@ -2,29 +2,28 @@ package com.example.harit.marketapp.ui.feedPage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
-import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.MainPageAdapter
-import com.example.harit.marketapp.ui.chatPage.ChatActivity
 import com.example.harit.marketapp.ui.chatPage.ChatListActivity
-import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.example.harit.marketapp.ui.model.SearchModel
+import com.example.harit.marketapp.ui.model.User
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_market_viewpager.*
 
 
 class MarketViewpagerFragment : Fragment() {
 
+    lateinit var myUser : User
+
     companion object {
-        fun newInstance() : MarketViewpagerFragment{
+        fun newInstance(bundle: Bundle) : MarketViewpagerFragment{
             val fragment = MarketViewpagerFragment()
+            fragment.arguments = bundle
             return fragment
         }
     }
@@ -41,10 +40,15 @@ class MarketViewpagerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setTopBar()
 
+        myUser = arguments?.getParcelable("myUser")!!
+        var bundle = Bundle().also {
+            it.putParcelable("myUser", myUser)
+        }
+
         var adapter = MainPageAdapter(childFragmentManager)
-        adapter.setFragmentItem(FeedFragment.newInstance()
+        adapter.setFragmentItem(FeedFragment.newInstance(bundle)
                 , 0, "Buy")
-        adapter.setFragmentItem(FeedFragment.newInstance()
+        adapter.setFragmentItem(FeedFragment.newInstance(bundle)
                 , 1, "Trade")
         viewPager?.adapter = adapter
         initTab()

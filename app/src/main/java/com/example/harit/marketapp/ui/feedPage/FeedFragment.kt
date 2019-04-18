@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
-import com.example.harit.marketapp.ui.model.FeedItem
 import com.example.harit.marketapp.ui.model.FeedModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -21,7 +20,7 @@ class FeedFragment : Fragment() {
     private val feedList : MutableList<FeedModel> = arrayListOf()
 
     companion object {
-        fun newInstance(): FeedFragment{
+        fun newInstance(bundle: Bundle): FeedFragment{
             val fragment = FeedFragment()
             return fragment
         }
@@ -49,6 +48,7 @@ class FeedFragment : Fragment() {
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
                         val feedItem = document.toObject(FeedModel::class.java)
+                        //feedItem.id = document.id
                         feedList.add(feedItem)
                     }
 

@@ -45,6 +45,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
 
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
     implementation 'org.greenrobot:eventbus:3.1.1'
     //image slider
     implementation 'com.squareup.picasso:picasso:2.3.2'

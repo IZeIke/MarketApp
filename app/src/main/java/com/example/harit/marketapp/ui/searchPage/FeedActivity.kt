@@ -91,6 +91,7 @@ class FeedActivity : AppCompatActivity() {
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
                         val feedItem = document.toObject(FeedModel::class.java)
+                        //feedItem.id = document.id
                         feedList.add(feedItem)
                     }
 
@@ -163,6 +164,9 @@ class FeedActivity : AppCompatActivity() {
             it.haveSearch(false)
             it.haveFilter(true)
             it.haveBack(true)
+            it.getBackHolder()?.setOnClickListener {
+                onBackPressed()
+            }
             it.getFilterHolder()?.setOnClickListener {
                 if(!clickBar) {
                     clickBar = true

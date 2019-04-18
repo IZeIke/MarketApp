@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/chatBtn"
+        android:layout_above="@id/tabHolder"
         >
 
         <ImageView
@@ -86,28 +86,81 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/chatBtn"
+    <LinearLayout
+        android:id="@+id/tabHolder"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/chatButton"
+            android:background="@color/light_sea_green"
+            android:layout_width="100dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/chatIc"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_chat_black_24dp"
+                />
+            <TextView
+                android:layout_below="@id/chatIc"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="สอบถาม"
+                android:layout_centerHorizontal="true"
+                />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+        android:id="@+id/chatBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         >
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/chatButton"
+            android:id="@+id/BuyButton"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/orange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="คุยกับผู้ขาย"
+            android:text="จองเลย"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:visibility="invisible"
             />
 
+            <TextView
+                android:id="@+id/textBuyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="จองเลย!!"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                />
+
+
     </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

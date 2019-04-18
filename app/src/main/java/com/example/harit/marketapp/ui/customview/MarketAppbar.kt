@@ -29,6 +29,10 @@ class MarketAppbar @JvmOverloads constructor(
         return chatHolder
     }
 
+    fun getBackHolder(): RelativeLayout? {
+        return backHolder
+    }
+
     fun setText(text : String){
         textView.text = text
     }

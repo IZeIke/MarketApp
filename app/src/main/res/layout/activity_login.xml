@@ -98,6 +98,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/signUpHolder"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,6 +126,43 @@
             />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/orTx"
+        android:layout_marginTop="20sp"
+        android:layout_below="@+id/signUpHolder"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="or"
+        />
+
+    <Button
+        android:layout_below="@id/orTx"
+        android:id="@+id/facebookLogin"
+        android:backgroundTint="#3C5A99"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="continue with facebook"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="invisible"
+        />
+
 
 
 

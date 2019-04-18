@@ -1,6 +1,7 @@
 package com.example.harit.marketapp.ui.chatPage
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,11 @@ class ChatListActivity : AppCompatActivity() {
                             val chat = doc.toObject(ChatListModel::class.java)
                             chatList.add(chat)
                         }
+                        if(chatList.size == 0){
+                            noItemText.visibility = View.VISIBLE
+                        }else{
+                            noItemText.visibility = View.GONE
+                        }
                         setRecyclerView(chatList)
                     }
                 }
@@ -53,7 +59,9 @@ class ChatListActivity : AppCompatActivity() {
         topBar.setNoti("0")
         topBar.haveChat(false)
         topBar.haveBack(true)
-
+        topBar.getBackHolder()?.setOnClickListener {
+            onBackPressed()
+        }
         topBar.getSearchHolder()?.setOnClickListener {
             /*var bundle = Bundle().also { bundle ->
                 bundle.putParcelable("model", SearchModel())

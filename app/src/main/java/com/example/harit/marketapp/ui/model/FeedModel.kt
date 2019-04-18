@@ -16,5 +16,6 @@ data class FeedModel(
         var description: String? = null,
         var user : User? = null,
         var shipping : String? = null,
-        var payment : String? = null
+        var payment : String? = null,
+        var id : String? = null
 ) : Parcelable

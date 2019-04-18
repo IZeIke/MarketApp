@@ -262,6 +262,9 @@ class FilterActivity : AppCompatActivity() {
             it.setText("Filter")
             it.haveNoti(false)
             it.haveBack(true)
+            it.getBackHolder()?.setOnClickListener {
+                onBackPressed()
+            }
         }
 
     }

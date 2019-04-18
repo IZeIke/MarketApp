@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
-import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
 import com.example.harit.marketapp.ui.adapter.SellItemPageAdapter
-import com.example.harit.marketapp.ui.model.FeedItem
+import com.example.harit.marketapp.ui.model.FeedModel
 import com.example.harit.marketapp.ui.model.SearchModel
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -24,10 +23,10 @@ import kotlinx.android.synthetic.main.fragment_sell.*
 class SellFragment : Fragment() {
 
     private var lastVisible : DocumentSnapshot? = null
-    private val feedList : MutableList<FeedItem> = arrayListOf()
+    private val feedList : MutableList<FeedModel> = arrayListOf()
 
     companion object {
-        fun newInstance() : SellFragment{
+        fun newInstance(bundle: Bundle): SellFragment{
             val fragment = SellFragment()
             return fragment
         }
@@ -72,7 +71,8 @@ class SellFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedItem::class.java)
+                        val feedItem = document.toObject(FeedModel::class.java)
+                        //feedItem.id = document.id
                         feedList.add(feedItem)
                     }
 
@@ -92,7 +92,7 @@ class SellFragment : Fragment() {
 
     }
 
-    private fun setRecyclerView(feedList: MutableList<FeedItem>) {
+    private fun setRecyclerView(feedList: MutableList<FeedModel>) {
         recyclerView?.let {
             var layoutManager = GridLayoutManager(it.context,2)
             it.layoutManager = layoutManager

@@ -20,5 +20,6 @@ data class FeedItem(
         var description: String? = null,
         var user : HashMap<String,Any>? = null,
         var shipping : String? = null,
-        var payment : String? = null
+        var payment : String? = null,
+        var id : String? = null
 )

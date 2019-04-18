@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.feedPage.MainActivity
 import com.example.harit.marketapp.ui.loginPage.LoginActivity
 import com.example.harit.marketapp.ui.model.SearchModel
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_setting.*
 class SettingFragment : Fragment() {
 
     companion object {
-        fun newInstance() : SettingFragment {
+        fun newInstance(bundle: Bundle): SettingFragment {
             val fragment = SettingFragment()
             return fragment
         }
@@ -54,6 +55,9 @@ class SettingFragment : Fragment() {
 
     private fun initInstance(myUser: User?) {
         userName.text = myUser?.name
+        myUser?.imageUrl.let {
+            profile_image.setImageUrl(it)
+        }
     }
 
     private fun setTopBar() {

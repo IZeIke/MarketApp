@@ -109,8 +109,11 @@ class StepEndFragment : Fragment() , BlockingStep {
                                 feedItem.imageUrl = imageList.toCollection(ArrayList())
                                 feedItem.user = user
 
-                                FirebaseFirestore.getInstance().collection("Feed")
-                                        .document().set(feedItem).addOnCompleteListener {
+                                var docRef = FirebaseFirestore.getInstance().collection("Feed")
+                                        .document()
+                                feedItem.id = docRef.id
+
+                                docRef.set(feedItem).addOnCompleteListener {
                                             activity?.onBackPressed()
                                         }
                             }
