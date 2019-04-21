@@ -55,6 +55,8 @@ class ItemPageActivity : AppCompatActivity() {
                     }
                     if(uid != feedItem.user?.id){
                         tabHolder.visibility = View.VISIBLE
+                    }else{
+                        tabEditHolder.visibility = View.VISIBLE
                     }
                 }
 
@@ -63,11 +65,29 @@ class ItemPageActivity : AppCompatActivity() {
 
     private fun initInstance() {
 
+        getFeedListSame()
+        getFeedListOther()
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val width = displayMetrics.widthPixels
+
+        recyclerView?.let { recyclerView ->
+            recyclerView.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+            recyclerView.adapter = ItemPageAdapter(this,feedItem,null,null,width/2).also {
+                it.notifyDataSetChanged()
+            }
+        }
+
+        btnInit()
+    }
+
+    private fun getFeedListSame() {
         var feedListSame = mutableListOf<FeedModel>()
 
         db.collection("Feed").orderBy("create", Query.Direction.DESCENDING)
                 .whereEqualTo("user.id",feedItem.user?.id)
-                .limit(4)
+                .limit(8)
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
@@ -79,22 +99,33 @@ class ItemPageActivity : AppCompatActivity() {
                         }
                     }
 
-                    val displayMetrics = DisplayMetrics()
-                    windowManager.defaultDisplay.getMetrics(displayMetrics)
-                    val width = displayMetrics.widthPixels
-
-                    recyclerView?.let { recyclerView ->
-                        recyclerView.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-                        recyclerView.adapter = ItemPageAdapter(this,feedItem,feedListSame,null,width/2).also {
-                            it.notifyDataSetChanged()
-                        }
-                    }
+                    (recyclerView.adapter as ItemPageAdapter).addFeedListSame(feedListSame)
                 }
                 .addOnFailureListener { exception ->
                     Log.d("document-error", "Error getting documents: ", exception)
                 }
+    }
 
-        btnInit()
+    private fun getFeedListOther() {
+        var feedListOther = mutableListOf<FeedModel>()
+
+        db.collection("Feed").orderBy("create", Query.Direction.DESCENDING)
+                .whereEqualTo("filter.name", feedItem.filter!!["name"].toString())
+                .limit(8)
+                .get()
+                .addOnSuccessListener {result ->
+                    for(document in result){
+                        if(document.id != feedItem.id) {
+                            val feedItem = document.toObject(FeedModel::class.java)
+                            //feedItem.id = document.id
+                            feedListOther.add(feedItem)
+                        }
+                    }
+                    (recyclerView.adapter as ItemPageAdapter).addFeedListOther(feedListOther)
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("document-error", "Error getting documents: ", exception)
+                }
     }
 
     private fun btnInit() {

@@ -115,6 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_navigation_height"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         >
 
         <RelativeLayout
@@ -182,6 +183,83 @@
 
 
     </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabEditHolder"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/editButton"
+            android:background="@color/light_sea_green"
+            android:layout_width="100dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/editIc"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/ic_edit_white_24dp"
+                    />
+                <TextView
+                    android:layout_below="@id/editIc"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="แก้ไข"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/soldBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/soldButton"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/orange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="จองเลย"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="invisible"
+                />
+
+            <TextView
+                android:id="@+id/textsoldBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="บันทึกว่าขายแล้ว"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                />
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 

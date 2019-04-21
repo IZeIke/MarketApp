@@ -1,6 +1,7 @@
 package com.example.harit.marketapp.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
+import com.example.harit.marketapp.ui.UserPage.UserActivity
 import com.example.harit.marketapp.ui.model.FeedModel
 import kotlinx.android.synthetic.main.item_feed_page.view.*
 import kotlinx.android.synthetic.main.item_view_item_page.view.*
 
-class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val feedListSame: MutableList<FeedModel>?, private val feedListOther: MutableList<FeedModel>?,private val width: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var feedListSame: MutableList<FeedModel>?, private var feedListOther: MutableList<FeedModel>?,private val width: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,6 +38,16 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val
         return 3
     }
 
+    fun addFeedListSame(list : MutableList<FeedModel>){
+        feedListSame = list
+        notifyDataSetChanged()
+    }
+
+    fun addFeedListOther(list : MutableList<FeedModel>){
+        feedListOther = list
+        notifyDataSetChanged()
+    }
+
     /*fun addList(item: Chat) {
 
         chatList.add(item)
@@ -52,6 +64,10 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val
                 holder.itemPrice.text = "฿"+feedItem.price.toString()
                 holder.itemName.text = feedItem.name
                 holder.itemDes.text = feedItem.description
+                holder.profile_image.setImageUrl(feedItem.user?.imageUrl)
+                holder.userHolder.setOnClickListener {
+                    context.startActivity(Intent(context,UserActivity::class.java).putExtra("user",feedItem.user))
+                }
             }
         }else if(position == 1){
             if(holder is RecyclerViewHolder){
@@ -61,9 +77,9 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val
                         recyclerView.visibility = View.VISIBLE
                         recyclerView.layoutManager = GridLayoutManager(context, 1,GridLayoutManager.HORIZONTAL,false)
                         if (recyclerView.itemDecorationCount == 0) {
-                            recyclerView.addItemDecoration(GridItemSpacingDecoration(2, 20, true))
+                            recyclerView.addItemDecoration(GridItemSpacingDecoration(feedListSame!!.size, 20, true))
                         }
-                        recyclerView.adapter = FeedPageHorizontalAdapter(context, feedListSame,width)
+                        recyclerView.adapter = FeedPageHorizontalAdapter(context, feedListSame!!,width)
                     }
                 }
             }
@@ -71,13 +87,14 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val
             if(holder is RecyclerViewHolder){
                 feedListOther?.let {
                     holder.topTextHolder.visibility = View.VISIBLE
+                    holder.topText.text = "โฟโต้เซ็ทอื่นๆของ ${feedListOther!![0].filter!!["name"]}"
                     holder.feedRecyclerView.let { recyclerView ->
                         recyclerView.visibility = View.VISIBLE
-                        recyclerView.layoutManager = GridLayoutManager(context, 1,GridLayoutManager.HORIZONTAL,false)
+                        recyclerView.layoutManager = GridLayoutManager(context,1 ,GridLayoutManager.HORIZONTAL,false)
                         if (recyclerView.itemDecorationCount == 0) {
-                            recyclerView.addItemDecoration(GridItemSpacingDecoration(2, 20, true))
+                            recyclerView.addItemDecoration(GridItemSpacingDecoration(feedListOther!!.size, 20, true))
                         }
-                        recyclerView.adapter = FeedPageHorizontalAdapter(context, feedListOther,width)
+                        recyclerView.adapter = FeedPageHorizontalAdapter(context, feedListOther!!,width)
                     }
                 }
             }
@@ -91,6 +108,8 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private val
         var itemPrice = itemView.itemPrice
         var sellerName = itemView.sellerName
         var itemDes = itemView.itemDes
+        var userHolder = itemView.userHolder
+        var profile_image = itemView.profile_image
     }
 
 

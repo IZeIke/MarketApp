@@ -52,6 +52,7 @@
         />
 
     <RelativeLayout
+        android:id="@+id/userHolder"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
