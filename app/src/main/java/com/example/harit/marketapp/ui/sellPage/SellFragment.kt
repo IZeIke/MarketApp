@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
+import com.example.harit.marketapp.ui.EditPage.EditPageActivity
 import com.example.harit.marketapp.ui.adapter.SellItemPageAdapter
+import com.example.harit.marketapp.ui.chatPage.ChatListActivity
 import com.example.harit.marketapp.ui.model.FeedModel
 import com.example.harit.marketapp.ui.model.SearchModel
 import com.example.harit.marketapp.ui.searchPage.FilterActivity
@@ -21,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_sell.*
 
-class SellFragment : Fragment() {
+class SellFragment : Fragment(),SellItemPageAdapter.SellItemPageAdapterInterface {
 
     private var lastVisible : DocumentSnapshot? = null
     private val feedList : MutableList<FeedModel> = arrayListOf()
@@ -44,24 +46,19 @@ class SellFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topBar.getSearchHolder()?.setOnClickListener {
-            var bundle = Bundle().also { bundle ->
-                bundle.putParcelable("model", SearchModel())
-                bundle.putInt("tag",1)
-            }
-            startActivity(Intent(context, FilterActivity::class.java)
-                    .putExtras(bundle))
-        }
+        setTopBar()
 
         fab.setOnClickListener {
             startActivity(Intent(activity,AddItemActivity::class.java))
         }
 
-        getData()
+        //getData()
     }
 
     private fun getData() {
         showLoading()
+
+        feedList.clear()
 
         var uid = FirebaseAuth.getInstance().currentUser?.uid
         var db = FirebaseFirestore.getInstance().collection("Feed")
@@ -108,7 +105,7 @@ class SellFragment : Fragment() {
             if(it.itemDecorationCount == 0){
                 it.addItemDecoration(GridItemSpacingDecoration(2,20,true))
             }
-            it.adapter = SellItemPageAdapter(it.context, feedList)
+            it.adapter = SellItemPageAdapter(it.context, feedList,this)
             it.adapter?.notifyDataSetChanged()
             stopLoading()
             //swipeRefreshLayout.isRefreshing = false
@@ -125,4 +122,48 @@ class SellFragment : Fragment() {
         recyclerView.visibility = View.VISIBLE
     }
 
+    override fun updateSoldItem(id : String) {
+        FirebaseFirestore.getInstance().collection("Feed").document(id)
+                .update("status", "sold")
+                .addOnSuccessListener {
+                    getData()
+                }
+    }
+
+    override fun deleteItem(id : String) {
+        FirebaseFirestore.getInstance().collection("Feed").document(id)
+                .delete()
+                .addOnSuccessListener {
+                    getData()
+                }
+
+    }
+
+    override fun startEditActivity(feedModel: FeedModel) {
+        startActivity(Intent(context,EditPageActivity::class.java).putExtra("model",feedModel))
+    }
+
+    private fun setTopBar() {
+        topBar.setText("Sell")
+        topBar.setChatNoti("0")
+        topBar.setNoti("0")
+        topBar.haveSearch(true)
+        topBar.getSearchHolder()?.setOnClickListener {
+            var bundle = Bundle().also { bundle ->
+                bundle.putParcelable("model",SearchModel())
+                bundle.putInt("tag",1)
+            }
+            startActivity(Intent(context,FilterActivity::class.java)
+                    .putExtras(bundle))
+        }
+
+        topBar.getChatHolder()?.setOnClickListener {
+            startActivity(Intent(context,ChatListActivity::class.java))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getData()
+    }
 }

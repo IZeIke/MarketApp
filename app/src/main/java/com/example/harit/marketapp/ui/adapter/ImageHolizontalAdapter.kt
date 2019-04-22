@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUri
+import com.example.harit.marketapp.extention.setImageUrl
 import kotlinx.android.synthetic.main.view_image_100dp.view.*
 import kotlinx.android.synthetic.main.view_image_card.view.*
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 
-class ImageHolizontalAdapter(val type : Int, private val imageList: List<Uri>) : Adapter<RecyclerView.ViewHolder>() {
+class ImageHolizontalAdapter(val type : Int, private val imageList: List<Uri>?, private val imageListUrl: List<String>?) : Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if(viewType == 0)
@@ -37,10 +38,17 @@ class ImageHolizontalAdapter(val type : Int, private val imageList: List<Uri>) :
     }
 
     override fun getItemCount(): Int {
-        return if(type == 0)
-            imageList.size + 1
-        else
-            imageList.size
+        if(imageList == null){
+            return if (type == 0)
+                imageListUrl!!.size + 1
+            else
+                imageListUrl!!.size
+        }else {
+            return if (type == 0)
+                imageList.size + 1
+            else
+                imageList.size
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -48,11 +56,22 @@ class ImageHolizontalAdapter(val type : Int, private val imageList: List<Uri>) :
             when {
                 (position == 0) -> {
                     holder.headImage.visibility = View.VISIBLE
-                    holder.image.setImageUri(imageList[position])
+                    imageList?.let {
+                        holder.image.setImageUri(imageList[position])
+                    }
+                    imageListUrl?.let {
+                        holder.image.setImageUrl(it[position])
+                    }
+
                 }
                 (position != itemCount - 1) -> {
                     holder.headImage.visibility = View.GONE
-                    holder.image.setImageUri(imageList[position])
+                    imageList?.let {
+                        holder.image.setImageUri(imageList[position])
+                    }
+                    imageListUrl?.let {
+                        holder.image.setImageUrl(it[position])
+                    }
                 }
                 else -> {
                     holder.headImage.visibility = View.GONE
@@ -67,11 +86,21 @@ class ImageHolizontalAdapter(val type : Int, private val imageList: List<Uri>) :
             when {
                 (position == 0) -> {
                     //holder.headImage.visibility = View.VISIBLE
-                    holder.image.setImageUri(imageList[position])
+                    imageList?.let {
+                        holder.image.setImageUri(imageList[position])
+                    }
+                    imageListUrl?.let {
+                        holder.image.setImageUrl(it[position])
+                    }
                 }
                 else -> {
                     //holder.headImage.visibility = View.GONE
-                    holder.image.setImageUri(imageList[position])
+                    imageList?.let {
+                        holder.image.setImageUri(imageList[position])
+                    }
+                    imageListUrl?.let {
+                        holder.image.setImageUrl(it[position])
+                    }
                     holder.image.setOnClickListener {
 
                     }

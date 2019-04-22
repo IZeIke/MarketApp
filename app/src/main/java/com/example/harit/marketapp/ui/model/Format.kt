@@ -4,6 +4,7 @@ class Format {
     companion object {
         public val SET = "normal"
         public val SINGLE = "single"
+        public val ALL = "all"
     }
 
 }

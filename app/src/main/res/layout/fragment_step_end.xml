@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/top"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +34,20 @@
             />
 
     </LinearLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topBarHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+        <com.example.harit.marketapp.ui.customview.MarketAppbar
+            android:id="@+id/topBar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -170,5 +185,34 @@
         />
 
     <include layout="@layout/horizontal_1px_line" />
+
+    <RelativeLayout
+        android:id="@+id/editBtnHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        >
+
+        <Button
+            android:id="@+id/summitButton"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="แก้ไข"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/colorPrimary"
+            />
+    </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

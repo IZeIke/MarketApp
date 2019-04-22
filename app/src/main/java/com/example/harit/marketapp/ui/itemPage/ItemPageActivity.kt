@@ -19,11 +19,13 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_item.*
 import android.util.DisplayMetrics
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.ui.EditPage.EditPageActivity
 
 
 class ItemPageActivity : AppCompatActivity() {
 
     lateinit var feedItem: FeedModel
+    var refresh = false
     var lock = true
     var myUser: User? = null
     val db = FirebaseFirestore.getInstance()
@@ -48,15 +50,31 @@ class ItemPageActivity : AppCompatActivity() {
                 .document("bookList").collection(uid!!).document(feedItem.id!!)
                 .get()
                 .addOnCompleteListener {
-                    if(it.result.get("id") != null){
-                        textBuyBtn.text = "จองแล้ว"
-                        chatBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
-                        chatBtn.isClickable = false
-                    }
-                    if(uid != feedItem.user?.id){
-                        tabHolder.visibility = View.VISIBLE
-                    }else{
+                    if(feedItem.status == "sold"){
                         tabEditHolder.visibility = View.VISIBLE
+                        soldHolder.visibility = View.VISIBLE
+                    }else {
+                        if (it.result.get("id") != null) {
+                            textBuyBtn.text = "จองแล้ว"
+                            chatBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+                            chatBtn.isClickable = false
+                        }
+                        if (uid != feedItem.user?.id) {
+                            tabHolder.visibility = View.VISIBLE
+                        } else {
+                            tabEditHolder.visibility = View.VISIBLE
+                            editButton.setOnClickListener {
+                                refresh = true
+                                startActivity(Intent(this, EditPageActivity::class.java).putExtra("model",feedItem))
+                            }
+                            soldBtn.setOnClickListener {
+                                FirebaseFirestore.getInstance().collection("Feed").document(feedItem.id!!)
+                                        .update("status", "sold")
+                                        .addOnSuccessListener {
+                                            soldHolder.visibility = View.VISIBLE
+                                        }
+                            }
+                        }
                     }
                 }
 
@@ -95,7 +113,9 @@ class ItemPageActivity : AppCompatActivity() {
                         if(document.id != feedItem.id) {
                             val feedItem = document.toObject(FeedModel::class.java)
                             //feedItem.id = document.id
-                            feedListSame.add(feedItem)
+                            if(feedItem.status != "sold") {
+                                feedListSame.add(feedItem)
+                            }
                         }
                     }
 
@@ -118,7 +138,9 @@ class ItemPageActivity : AppCompatActivity() {
                         if(document.id != feedItem.id) {
                             val feedItem = document.toObject(FeedModel::class.java)
                             //feedItem.id = document.id
-                            feedListOther.add(feedItem)
+                            if(feedItem.status != "sold") {
+                                feedListOther.add(feedItem)
+                            }
                         }
                     }
                     (recyclerView.adapter as ItemPageAdapter).addFeedListOther(feedListOther)
@@ -207,5 +229,24 @@ class ItemPageActivity : AppCompatActivity() {
             j.toString()+"_"+i.toString()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (refresh) {
+            getData()
+        }
+    }
+
+    private fun getData() {
+        FirebaseFirestore.getInstance().collection("Feed").document(feedItem.id!!)
+                .get().addOnSuccessListener {
+                    var item = it.toObject(FeedModel::class.java)
+                    feedItem = item!!
+
+                    (recyclerView.adapter as ItemPageAdapter).addFeedItem(feedItem)
+                }
+        refresh = false
+    }
+
 
 }

@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:textSize="2sp"
             android:text="Orn"
+            android:textColor="@color/white"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
@@ -80,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="normal"
+            android:textColor="@color/white"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
@@ -87,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="set 5"
+            android:textColor="@color/white"
             app:chipBackgroundColor="@color/light_sea_green"
             />
         <com.google.android.material.chip.Chip
@@ -94,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="comp"
+            android:textColor="@color/white"
             app:chipBackgroundColor="@color/light_sea_green"
             />
 

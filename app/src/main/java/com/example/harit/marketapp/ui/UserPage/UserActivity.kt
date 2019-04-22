@@ -3,6 +3,7 @@ package com.example.harit.marketapp.ui.UserPage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
@@ -14,6 +15,7 @@ import com.example.harit.marketapp.ui.adapter.UserPageAdapter
 import com.example.harit.marketapp.ui.chatPage.ChatActivity
 import com.example.harit.marketapp.ui.model.FeedModel
 import com.example.harit.marketapp.ui.model.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_user.*
@@ -21,12 +23,17 @@ import kotlinx.android.synthetic.main.activity_user.*
 class UserActivity : AppCompatActivity() {
 
     lateinit var user : User
+    val uid = FirebaseAuth.getInstance().uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
         user = intent.getParcelableExtra("user")
+
+        if(user.id == uid){
+            chatBtn.visibility = View.GONE
+        }
 
         initInstance()
     }

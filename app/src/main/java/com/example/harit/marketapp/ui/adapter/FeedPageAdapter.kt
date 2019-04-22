@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.itemPage.ItemPageActivity
-import com.example.harit.marketapp.ui.model.FeedItem
-import com.example.harit.marketapp.ui.model.FeedModel
+import com.example.harit.marketapp.ui.model.*
+import com.example.harit.marketapp.ui.searchPage.FeedActivity
 import com.robertlevonyan.components.picker.set
 import kotlinx.android.synthetic.main.view_item_feed.view.*
 
@@ -35,18 +35,40 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is ItemViewHolder){
 
-            feedList[position].let {
+            feedList[position].let {feedModel ->
                 holder.imageView.set(R.drawable.mockup)
-                it.imageUrl?.let {list ->
+                feedModel.imageUrl?.let {list ->
                     if(list.size > 0)
                         holder.imageView.setImageUrl(list[0])
                 }
-                holder.tvName.text = it.name
-                holder.tvPrice.text = "฿"+it.price.toString()
-                holder.nameTag.text = it.filter?.get("name")
-                holder.photosetTypeTag.text = it.filter?.get("photosetType")
-                holder.typeTag.text = it.filter?.get("type")
-                holder.setTag.text = it.filter?.get("set")
+                holder.tvName.text = feedModel.name
+                //if(feedModel.status != "sold") {
+                    holder.tvPrice.text = feedModel.price.toString()
+                /*}else{
+                    holder.tvPrice.text = "ขายแล้ว"
+                    holder.dollar.visibility = View.GONE
+                }*/
+                holder.nameTag.text = feedModel.filter?.get("name")
+                holder.nameTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, feedModel.filter?.get("name")!!, Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                holder.photosetTypeTag.text = feedModel.filter?.get("photosetType")
+                holder.photosetTypeTag.setOnClickListener {
+                    var model = SearchModel(feedModel.filter?.get("photosetType")!!, "All", Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                holder.typeTag.text = feedModel.filter?.get("type")
+                holder.typeTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED,0, feedModel.filter?.get("type")!!)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                holder.setTag.text = feedModel.filter?.get("set")
+                val strs = feedModel.filter?.get("set")?.split(" ")?.toTypedArray()
+                holder.setTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED, strs!![1].toInt(), Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
             }
 
             holder.cardView.setOnClickListener {
@@ -66,6 +88,7 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
         var photosetTypeTag = itemView.photosetType
         var typeTag = itemView.type
         var setTag = itemView.set
+        var dollar = itemView.dollarSign
     }
 
 }

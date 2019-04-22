@@ -114,7 +114,7 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
                     .setPivotX(Pivot.X.CENTER) // CENTER is a default one
                     .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
                     .build())
-            pictureScroll.adapter = ImageHolizontalAdapter(1,uriList)
+            pictureScroll.adapter = ImageHolizontalAdapter(1,uriList,null)
             placeholder.visibility = View.GONE
         }
     }

@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigationBarSetting() {
 
-        val item1 = AHBottomNavigationItem("Sell", R.drawable.ic_shopping_cart_black_24dp)
+        val item1 = AHBottomNavigationItem("Sell", R.drawable.ic_add_shopping_cart_white_24dp)
         val item2 = AHBottomNavigationItem("Market", R.drawable.ic_shopping_cart_black_24dp)
-        val item3 = AHBottomNavigationItem("Setting", R.drawable.ic_shopping_cart_black_24dp)
+        val item3 = AHBottomNavigationItem("Setting", R.drawable.ic_settings_white_24dp)
 
         bottom_navigation.addItem(item1)
         bottom_navigation.addItem(item2)

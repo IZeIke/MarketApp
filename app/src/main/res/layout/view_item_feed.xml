@@ -38,24 +38,40 @@
         android:maxLines="2"
         />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
+        >
+        <TextView
+            android:id="@+id/dollarSign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="฿"
+            android:textColor="@color/orange_red"
+            android:textStyle="bold"
+            />
+
     <TextView
         android:id="@+id/textPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="฿Sample"
-        android:layout_marginLeft="15dp"
-        android:textSize="20sp"
-        android:textColor="@color/crimson"
+        android:text="Sample"
+        android:textSize="17sp"
+        android:textColor="@color/orange_red"
         android:textStyle="bold"
-        android:layout_marginBottom="15dp"
         />
+
+    </LinearLayout>
 
     <com.google.android.material.chip.ChipGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:singleLine="false"
         android:layout_marginBottom="15dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
         >
 
@@ -64,13 +80,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="2sp"
+            android:textColor="@color/white"
             android:text="Orn"
-            app:chipBackgroundColor="@color/light_sea_green"
+            app:chipBackgroundColor="@color/royal_blue"
             />
         <com.google.android.material.chip.Chip
             android:id="@+id/photosetType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="normal"
             app:chipBackgroundColor="@color/light_sea_green"
             />
@@ -78,6 +96,7 @@
             android:id="@+id/set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="set 5"
             app:chipBackgroundColor="@color/light_sea_green"
             />
@@ -85,8 +104,9 @@
             android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="comp"
-            app:chipBackgroundColor="@color/light_sea_green"
+            app:chipBackgroundColor="@color/royal_blue"
             />
 
     </com.google.android.material.chip.ChipGroup>

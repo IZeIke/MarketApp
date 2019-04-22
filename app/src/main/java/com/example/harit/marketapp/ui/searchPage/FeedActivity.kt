@@ -83,16 +83,20 @@ class FeedActivity : AppCompatActivity() {
             dbRef = dbRef.whereEqualTo("filter.type", type)
         }
 
+        if(model.format != Format.ALL){
+            dbRef = dbRef.whereEqualTo("filter.photosetType",model.format)
+        }
 
-            dbRef.whereEqualTo("filter.photosetType",model.format)
-                    .limit(20)
+            dbRef.limit(20)
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
                         val feedItem = document.toObject(FeedModel::class.java)
                         //feedItem.id = document.id
-                        feedList.add(feedItem)
+                        //if(feedItem.status != "sold") {
+                            feedList.add(feedItem)
+                        //}
                     }
 
                     if(result.size() != 0)
@@ -117,7 +121,7 @@ class FeedActivity : AppCompatActivity() {
             feedRecyclerView.addOnScrollListener(object : RecyclerWithLoadMore(layoutManager)
             {
                 override fun onLoadMore(current_page: Int) {
-                    "loadmore".Toast(this@FeedActivity)
+                    //"loadmore".Toast(this@FeedActivity)
                     getDataLoadMore()
                 }
             })
@@ -142,7 +146,9 @@ class FeedActivity : AppCompatActivity() {
                     for (document in result) {
                         Log.d("document", document.id + " => " + document.data)
                         val feedItem = document.toObject(FeedModel::class.java)
-                        feedList.add(feedItem)
+                        //if(feedItem.status != "sold") {
+                            feedList.add(feedItem)
+                        //}
                     }
 
                     if(result.size() != 0){

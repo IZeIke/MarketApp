@@ -11,11 +11,12 @@ import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.UserPage.UserActivity
-import com.example.harit.marketapp.ui.model.FeedModel
+import com.example.harit.marketapp.ui.model.*
+import com.example.harit.marketapp.ui.searchPage.FeedActivity
 import kotlinx.android.synthetic.main.item_feed_page.view.*
 import kotlinx.android.synthetic.main.item_view_item_page.view.*
 
-class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var feedListSame: MutableList<FeedModel>?, private var feedListOther: MutableList<FeedModel>?,private val width: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ItemPageAdapter(val context: Context, var feedItem: FeedModel, private var feedListSame: MutableList<FeedModel>?, private var feedListOther: MutableList<FeedModel>?,private val width: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,6 +49,11 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var
         notifyDataSetChanged()
     }
 
+    fun addFeedItem(item: FeedModel){
+        feedItem = item
+        notifyDataSetChanged()
+    }
+
     /*fun addList(item: Chat) {
 
         chatList.add(item)
@@ -64,7 +70,9 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var
                 holder.itemPrice.text = "฿"+feedItem.price.toString()
                 holder.itemName.text = feedItem.name
                 holder.itemDes.text = feedItem.description
-                holder.profile_image.setImageUrl(feedItem.user?.imageUrl)
+                feedItem.user?.imageUrl?.let {
+                    holder.profile_image.setImageUrl(it)
+                }
                 holder.userHolder.setOnClickListener {
                     context.startActivity(Intent(context,UserActivity::class.java).putExtra("user",feedItem.user))
                 }
@@ -73,6 +81,9 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var
             if(holder is RecyclerViewHolder){
                 feedListSame?.let {
                     holder.topTextHolder.visibility = View.VISIBLE
+                    holder.allBtn.setOnClickListener {
+                        context.startActivity(Intent(context,UserActivity::class.java).putExtra("user",feedItem.user))
+                    }
                     holder.feedRecyclerView.let { recyclerView ->
                         recyclerView.visibility = View.VISIBLE
                         recyclerView.layoutManager = GridLayoutManager(context, 1,GridLayoutManager.HORIZONTAL,false)
@@ -87,6 +98,10 @@ class ItemPageAdapter(val context: Context, val feedItem: FeedModel, private var
             if(holder is RecyclerViewHolder){
                 feedListOther?.let {
                     holder.topTextHolder.visibility = View.VISIBLE
+                    holder.allBtn.setOnClickListener {
+                        var model = SearchModel(Format.ALL, feedListOther!![0].filter!!["name"]!!,Sort.LASTED,0,Type.ALL)
+                        context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                    }
                     holder.topText.text = "โฟโต้เซ็ทอื่นๆของ ${feedListOther!![0].filter!!["name"]}"
                     holder.feedRecyclerView.let { recyclerView ->
                         recyclerView.visibility = View.VISIBLE

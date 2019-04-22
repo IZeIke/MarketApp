@@ -114,6 +114,7 @@ class StepEndFragment : Fragment() , BlockingStep {
                                 feedItem.id = docRef.id
 
                                 docRef.set(feedItem).addOnCompleteListener {
+
                                             activity?.onBackPressed()
                                         }
                             }
@@ -151,7 +152,7 @@ class StepEndFragment : Fragment() , BlockingStep {
     @Subscribe
     fun onImageListEvent(event: ImageListEvent) {
         uriList = event.imageList!!
-        recyclerView.adapter = ImageHolizontalAdapter(0,event.imageList!!)
+        recyclerView.adapter = ImageHolizontalAdapter(0,event.imageList!!,null)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 

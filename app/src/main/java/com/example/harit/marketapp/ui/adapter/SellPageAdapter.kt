@@ -3,7 +3,6 @@ package com.example.harit.marketapp.ui.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
@@ -11,14 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.itemPage.ItemPageActivity
-import com.example.harit.marketapp.ui.model.FeedItem
 import com.example.harit.marketapp.ui.model.FeedModel
 import com.robertlevonyan.components.picker.set
 import kotlinx.android.synthetic.main.view_item_sell.view.*
 
 
-class SellItemPageAdapter(val context: Context, private val feedList: MutableList<FeedModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SellItemPageAdapter(val context: Context, private val feedList: MutableList<FeedModel>,private val listener : SellItemPageAdapterInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    interface SellItemPageAdapterInterface{
+        fun updateSoldItem(id : String)
+        fun deleteItem(id : String)
+        fun startEditActivity(feedModel: FeedModel)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_item_sell,parent,false))
@@ -53,7 +56,7 @@ class SellItemPageAdapter(val context: Context, private val feedList: MutableLis
             }
 
             holder.option.setOnClickListener {
-                showPopup(holder)
+                showPopup(holder,position)
             }
 
             holder.cardView.setOnClickListener {
@@ -64,7 +67,7 @@ class SellItemPageAdapter(val context: Context, private val feedList: MutableLis
         }
     }
 
-    private fun showPopup(holder: ItemViewHolder) {
+    private fun showPopup(holder: ItemViewHolder,position: Int) {
         val popup = PopupMenu(context, holder.option)
         //inflating menu from xml resource
         popup.inflate(R.menu.menu_item_sell)
@@ -72,13 +75,13 @@ class SellItemPageAdapter(val context: Context, private val feedList: MutableLis
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu1 -> {
-
+                    listener.startEditActivity(feedList[position])
                 }
                 R.id.menu2 -> {
-
+                    listener.updateSoldItem(feedList[position].id!!)
                 }
                 R.id.menu3 -> {
-
+                    listener.deleteItem(feedList[position].id!!)
                 }
             }
             false
