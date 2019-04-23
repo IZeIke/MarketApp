@@ -80,9 +80,9 @@ class SellFragment : Fragment(),SellItemPageAdapter.SellItemPageAdapterInterface
 
                     setRecyclerView(feedList)
                     if(feedList.size == 0){
-                        noItemText.visibility = View.VISIBLE
+                        noItemText?.visibility = View.VISIBLE
                     }else{
-                        noItemText.visibility = View.GONE
+                        noItemText?.visibility = View.GONE
                     }
                 }
                 .addOnFailureListener { exception ->

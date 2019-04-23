@@ -15,16 +15,22 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_above="@id/editTextHolder"
+        android:layout_above="@id/holder"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/holder"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/editTextHolder"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -43,15 +49,67 @@
             android:textCursorDrawable="@null"
             />
 
-        <ImageButton
-            android:id="@+id/ic"
+        <ImageView
+            android:id="@+id/icAdd"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_add_circle_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/icSend"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/ic_send_black_24dp"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/ic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
             />
 
     </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/extendHolder"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cameraIc"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_photo_camera_black_24dp"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageIc"
+                android:layout_toRightOf="@id/cameraIc"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_image_blue_24dp"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

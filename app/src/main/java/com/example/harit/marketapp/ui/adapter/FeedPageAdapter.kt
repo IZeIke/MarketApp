@@ -43,7 +43,7 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
                 }
                 holder.tvName.text = feedModel.name
                 //if(feedModel.status != "sold") {
-                    holder.tvPrice.text = feedModel.price.toString()
+                holder.tvPrice.text = feedModel.price.toString()
                 /*}else{
                     holder.tvPrice.text = "ขายแล้ว"
                     holder.dollar.visibility = View.GONE
@@ -58,7 +58,11 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
                     var model = SearchModel(feedModel.filter?.get("photosetType")!!, "All", Sort.LASTED,0, Type.ALL)
                     context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
                 }
-                holder.typeTag.text = feedModel.filter?.get("type")
+                if(feedModel.filter?.get("type") == ""){
+                    holder.typeTag.visibility = View.GONE
+                }else {
+                    holder.typeTag.text = feedModel.filter?.get("type")
+                }
                 holder.typeTag.setOnClickListener {
                     var model = SearchModel(Format.ALL, "All", Sort.LASTED,0, feedModel.filter?.get("type")!!)
                     context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))

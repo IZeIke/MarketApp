@@ -26,10 +26,41 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottom_navigation_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-    <com.google.android.material.tabs.TabLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/feedRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    ></androidx.recyclerview.widget.RecyclerView>
+
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/loading"
+                    style="@style/SpinKitView.FadingCircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:SpinKit_Color="@color/light_sea_green"
+                    android:background="#FAFAFA"
+                    android:visibility="gone"
+                    />
+            </FrameLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+   <!-- <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBar"
         android:background="@color/colorPrimaryDark"
         android:elevation="10dp"
@@ -46,7 +77,7 @@
         android:layout_marginBottom="56dp"
         android:layout_below="@+id/tabBar"
         >
-    </androidx.viewpager.widget.ViewPager>
+    </androidx.viewpager.widget.ViewPager>-->
 
     </LinearLayout>
 

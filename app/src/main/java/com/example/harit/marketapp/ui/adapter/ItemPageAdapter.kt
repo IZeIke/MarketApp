@@ -70,6 +70,35 @@ class ItemPageAdapter(val context: Context, var feedItem: FeedModel, private var
                 holder.itemPrice.text = "฿"+feedItem.price.toString()
                 holder.itemName.text = feedItem.name
                 holder.itemDes.text = feedItem.description
+                holder.payment.text = feedItem.payment
+                holder.shipping.text = feedItem.shipping
+
+                holder.nameTag.text = feedItem.filter?.get("name")
+                holder.nameTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, feedItem.filter?.get("name")!!, Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                holder.photosetTypeTag.text = feedItem.filter?.get("photosetType")
+                holder.photosetTypeTag.setOnClickListener {
+                    var model = SearchModel(feedItem.filter?.get("photosetType")!!, "All", Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                if(feedItem.filter?.get("type") == ""){
+                    holder.typeTag.visibility = View.GONE
+                }else {
+                    holder.typeTag.text = feedItem.filter?.get("type")
+                }
+                holder.typeTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED,0, feedItem.filter?.get("type")!!)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                holder.setTag.text = feedItem.filter?.get("set")
+                val strs = feedItem.filter?.get("set")?.split(" ")?.toTypedArray()
+                holder.setTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED, strs!![1].toInt(), Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+
                 feedItem.user?.imageUrl?.let {
                     holder.profile_image.setImageUrl(it)
                 }
@@ -80,7 +109,11 @@ class ItemPageAdapter(val context: Context, var feedItem: FeedModel, private var
         }else if(position == 1){
             if(holder is RecyclerViewHolder){
                 feedListSame?.let {
-                    holder.topTextHolder.visibility = View.VISIBLE
+                    if(feedListSame?.size == 0){
+                        holder.topTextHolder.visibility = View.GONE
+                    }else {
+                        holder.topTextHolder.visibility = View.VISIBLE
+                    }
                     holder.allBtn.setOnClickListener {
                         context.startActivity(Intent(context,UserActivity::class.java).putExtra("user",feedItem.user))
                     }
@@ -97,12 +130,16 @@ class ItemPageAdapter(val context: Context, var feedItem: FeedModel, private var
         }else if(position == 2){
             if(holder is RecyclerViewHolder){
                 feedListOther?.let {
-                    holder.topTextHolder.visibility = View.VISIBLE
+                    if(feedListOther?.size == 0){
+                        holder.topTextHolder.visibility = View.GONE
+                    }else {
+                        holder.topTextHolder.visibility = View.VISIBLE
+                    }
                     holder.allBtn.setOnClickListener {
                         var model = SearchModel(Format.ALL, feedListOther!![0].filter!!["name"]!!,Sort.LASTED,0,Type.ALL)
                         context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
                     }
-                    holder.topText.text = "โฟโต้เซ็ทอื่นๆของ ${feedListOther!![0].filter!!["name"]}"
+                    holder.topText.text = "โฟโต้เซ็ทอื่นๆของ ${feedItem.filter!!["name"]}"
                     holder.feedRecyclerView.let { recyclerView ->
                         recyclerView.visibility = View.VISIBLE
                         recyclerView.layoutManager = GridLayoutManager(context,1 ,GridLayoutManager.HORIZONTAL,false)
@@ -125,6 +162,12 @@ class ItemPageAdapter(val context: Context, var feedItem: FeedModel, private var
         var itemDes = itemView.itemDes
         var userHolder = itemView.userHolder
         var profile_image = itemView.profile_image
+        var payment = itemView.payment
+        var shipping = itemView.shipping
+        var nameTag = itemView.name
+        var photosetTypeTag = itemView.photosetType
+        var typeTag = itemView.type
+        var setTag = itemView.set
     }
 
 

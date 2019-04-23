@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.setImageUrl
 import com.example.harit.marketapp.ui.itemPage.ItemPageActivity
-import com.example.harit.marketapp.ui.model.FeedModel
+import com.example.harit.marketapp.ui.model.*
+import com.example.harit.marketapp.ui.searchPage.FeedActivity
 import com.robertlevonyan.components.picker.set
 import kotlinx.android.synthetic.main.view_item_feed.view.*
 import kotlinx.android.synthetic.main.view_text.view.*
@@ -54,11 +55,32 @@ class UserPageAdapter (val context: Context, private val feedList: MutableList<F
                         holder.imageView.setImageUrl(list[0])
                 }
                 holder.tvName.text = it.name
-                holder.tvPrice.text = "฿"+it.price.toString()
+                holder.tvPrice.text = it.price.toString()
                 holder.nameTag.text = it.filter?.get("name")
+                holder.nameTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, feedList[position - 2].filter?.get("name")!!, Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
                 holder.photosetTypeTag.text = it.filter?.get("photosetType")
-                holder.typeTag.text = it.filter?.get("type")
+                holder.photosetTypeTag.setOnClickListener {
+                    var model = SearchModel(feedList[position - 2].filter?.get("photosetType")!!, "All", Sort.LASTED,0, Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
+                if(it.filter?.get("type") == ""){
+                    holder.typeTag.visibility = View.GONE
+                }else {
+                    holder.typeTag.text = it.filter?.get("type")
+                }
+                holder.typeTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED,0, feedList[position - 2].filter?.get("type")!!)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
                 holder.setTag.text = it.filter?.get("set")
+                val strs = it.filter?.get("set")?.split(" ")?.toTypedArray()
+                holder.setTag.setOnClickListener {
+                    var model = SearchModel(Format.ALL, "All", Sort.LASTED, strs!![1].toInt(), Type.ALL)
+                    context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
+                }
             }
 
             holder.cardView.setOnClickListener {

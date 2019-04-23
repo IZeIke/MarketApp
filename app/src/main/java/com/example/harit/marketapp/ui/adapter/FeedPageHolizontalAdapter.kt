@@ -59,7 +59,11 @@ class FeedPageHorizontalAdapter(val context: Context, private val feedList: Muta
                     var model = SearchModel(feedModel.filter?.get("photosetType")!!, "All", Sort.LASTED,0, Type.ALL)
                     context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))
                 }
-                holder.typeTag.text = feedModel.filter?.get("type")
+                if(feedModel.filter?.get("type") == ""){
+                    holder.typeTag.visibility = View.GONE
+                }else {
+                    holder.typeTag.text = feedModel.filter?.get("type")
+                }
                 holder.typeTag.setOnClickListener {
                     var model = SearchModel(Format.ALL, "All", Sort.LASTED,0, feedModel.filter?.get("type")!!)
                     context.startActivity(Intent(context, FeedActivity::class.java).putExtra("searchModel",model))

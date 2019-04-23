@@ -75,6 +75,12 @@ class StepDetailFragment : Fragment() , BlockingStep {
             }else {
                 Log.d("photoset_chip", chipGroup.findViewById<Chip>(i).text.toString())
                 photosetType = chipGroup.findViewById<Chip>(i).text.toString()
+                if(photosetType == "single"){
+                    typeHolder.visibility = View.GONE
+                    type = ""
+                }else{
+                    typeHolder.visibility = View.VISIBLE
+                }
             }
         }
 

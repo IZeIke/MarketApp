@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
@@ -17,9 +16,9 @@ import com.example.harit.marketapp.ui.model.Format
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.activity_feed.*
 
-class FeedFragment : Fragment() {
+class FeedFragment2 : Fragment() {
 
     private val feedList : MutableList<FeedModel> = arrayListOf()
     val db = FirebaseFirestore.getInstance()
@@ -28,7 +27,7 @@ class FeedFragment : Fragment() {
     lateinit var dbRef : Query
 
     companion object {
-        fun newInstance(bundle: Bundle,int: Int): FeedFragment{
+        fun newInstance(bundle: Bundle, int: Int): FeedFragment{
             val fragment = FeedFragment()
             bundle.putInt("type",int)
             fragment.arguments = bundle
@@ -52,7 +51,8 @@ class FeedFragment : Fragment() {
         showLoading()
 
         dbRef = db.collection("Feed")
-                    .orderBy("create", Query.Direction.DESCENDING)
+                    .orderBy("create",Query.Direction.DESCENDING).whereEqualTo("filter.photosetType", Format.SINGLE)
+
 
         getData()
 
@@ -75,7 +75,7 @@ class FeedFragment : Fragment() {
                         val feedItem = document.toObject(FeedModel::class.java)
                         //feedItem.id = document.id
                         //if(feedItem.status != "sold") {
-                            feedList.add(feedItem)
+                        feedList.add(feedItem)
                         //}
                     }
 
@@ -120,7 +120,7 @@ class FeedFragment : Fragment() {
                         Log.d("document", document.id + " => " + document.data)
                         val feedItem = document.toObject(FeedModel::class.java)
                         //if(feedItem.status != "sold") {
-                            feedList.add(feedItem)
+                        feedList.add(feedItem)
                         //}
                     }
 

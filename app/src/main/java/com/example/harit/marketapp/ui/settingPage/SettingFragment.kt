@@ -65,7 +65,7 @@ class SettingFragment : Fragment() {
 
     private fun initInstance(myUser: User?) {
         userName.text = myUser?.name
-        myUser?.imageUrl.let {
+        myUser?.imageUrl?.let {
             profile_image.setImageUrl(it)
         }
     }

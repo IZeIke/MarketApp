@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_above="@id/tabHolder"
-    >
+    android:layout_above="@id/tabHolder">
 
     <ImageView
         android:id="@+id/itemImage"
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="฿Sample"
         android:textSize="20sp"
-        android:textColor="@color/crimson"
+        android:textColor="@color/orange_red"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="16dp"
@@ -47,9 +46,106 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:text="samplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesample"
         />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleLine="false"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="2sp"
+            android:textColor="@color/white"
+            android:text="Orn"
+            app:chipBackgroundColor="@color/royal_blue"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/photosetType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="normal"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="set 5"
+            app:chipBackgroundColor="@color/light_sea_green"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="comp"
+            app:chipBackgroundColor="@color/royal_blue"
+            />
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <include layout="@layout/horizontal_1px_line" />
+
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="การจัดส่ง : "
+        />
+
+        <TextView
+            android:id="@+id/shipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ems"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_1px_line" />
+
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="การชำระเงิน : "
+            />
+
+        <TextView
+            android:id="@+id/payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="กสิกร"
+            />
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/userHolder"

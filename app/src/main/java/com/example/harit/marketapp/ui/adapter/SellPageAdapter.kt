@@ -51,8 +51,13 @@ class SellItemPageAdapter(val context: Context, private val feedList: MutableLis
                 holder.tvPrice.text = "฿"+it.price.toString()
                 holder.nameTag.text = it.filter?.get("name")
                 holder.photosetTypeTag.text = it.filter?.get("photosetType")
-                holder.typeTag.text = it.filter?.get("type")
+                if(it.filter?.get("type") == ""){
+                    holder.typeTag.visibility = View.GONE
+                }else {
+                    holder.typeTag.text = it.filter?.get("type")
+                }
                 holder.setTag.text = it.filter?.get("set")
+
             }
 
             holder.option.setOnClickListener {

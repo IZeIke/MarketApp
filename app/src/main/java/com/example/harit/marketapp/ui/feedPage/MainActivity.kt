@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     var uid = FirebaseAuth.getInstance().currentUser?.uid
-    lateinit var bundle : Bundle
+    var bundle : Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                             it.putParcelable("myUser", myUser)
                         }
                         supportFragmentManager.beginTransaction()
-                                .add(R.id.contentContainer, MarketViewpagerFragment.newInstance(bundle))
+                                .add(R.id.contentContainer, MarketViewpagerFragment.newInstance(bundle!!))
                                 .commit()
                     }
 
@@ -68,20 +68,27 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.setOnTabSelectedListener { position, wasSelected ->
             if(!wasSelected){
                 when (position) {
+
                     0 -> {
+                        bundle?.let {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.contentContainer,SellFragment.newInstance(bundle))
+                                .replace(R.id.contentContainer,SellFragment.newInstance(it))
                                 .commit()
+                        }
                     }
                     1 -> {
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.contentContainer,MarketViewpagerFragment.newInstance(bundle))
-                                .commit()
+                        bundle?.let {
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.contentContainer, MarketViewpagerFragment.newInstance(it))
+                                    .commit()
+                        }
                     }
                     else -> {
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.contentContainer,SettingFragment.newInstance(bundle))
-                                .commit()
+                        bundle?.let {
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.contentContainer, SettingFragment.newInstance(it))
+                                    .commit()
+                        }
                     }
                 }
             }

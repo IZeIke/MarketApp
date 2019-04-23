@@ -24,6 +24,9 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_step_end.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import android.app.ProgressDialog
+
+
 
 
 class StepEndFragment : Fragment() , BlockingStep {
@@ -42,6 +45,9 @@ class StepEndFragment : Fragment() , BlockingStep {
     }
 
     override fun onCompleteClicked(callback: StepperLayout.OnCompleteClickedCallback?) {
+        val dialog = ProgressDialog.show(context, "",
+                "Loading. Please wait...", true)
+        dialog.show()
 
         var imageList = Array<String>(uriList.size){""}
         /*var i = 0
@@ -114,7 +120,7 @@ class StepEndFragment : Fragment() , BlockingStep {
                                 feedItem.id = docRef.id
 
                                 docRef.set(feedItem).addOnCompleteListener {
-
+                                            dialog.dismiss()
                                             activity?.onBackPressed()
                                         }
                             }
@@ -167,8 +173,13 @@ class StepEndFragment : Fragment() , BlockingStep {
         set.text = event.chipList?.set.also {
             filter.put("set",it.toString())
         }
-        type.text = event.chipList?.type.also {
-            filter.put("type",it.toString())
+        if(event.chipList?.type == ""){
+            type.visibility = View.GONE
+            filter.put("type","")
+        }else {
+            type.text = event.chipList?.type.also {
+                filter.put("type", it.toString())
+            }
         }
     }
 
