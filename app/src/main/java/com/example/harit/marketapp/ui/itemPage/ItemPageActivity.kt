@@ -173,9 +173,13 @@ class ItemPageActivity : AppCompatActivity() {
 
                 val batch = db.batch()
 
+                var notiRef = db.collection("Noti").document("notiList").collection(feedItem.user?.id!!).document()
+
                 var bookRef = db.collection("Book").document("bookList").collection(uid!!).document(feedItem.id!!)
 
                 batch.set(bookRef,book)
+
+                batch.set(notiRef,NotiModel(null," ได้จอง ${feedItem.name}",myUser,notiRef.id))
 
                 var updateRef = db.collection("Feed").document(feedItem.id!!)
 

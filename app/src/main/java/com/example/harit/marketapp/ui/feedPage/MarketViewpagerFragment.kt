@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
+import com.example.harit.marketapp.ui.NotiPage.NotiActivity
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
 import com.example.harit.marketapp.ui.adapter.MainPageAdapter
 import com.example.harit.marketapp.ui.chatPage.ChatListActivity
@@ -174,6 +175,10 @@ class MarketViewpagerFragment : Fragment() {
 
         topBar.getChatHolder()?.setOnClickListener {
             startActivity(Intent(context,ChatListActivity::class.java))
+        }
+
+        topBar.getNotiHolder()?.setOnClickListener {
+            startActivity(Intent(context,NotiActivity::class.java))
         }
     }
 

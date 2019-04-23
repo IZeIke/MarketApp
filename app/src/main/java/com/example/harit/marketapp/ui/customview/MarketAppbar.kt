@@ -25,6 +25,10 @@ class MarketAppbar @JvmOverloads constructor(
         return filterHolder
     }
 
+    fun getNotiHolder(): RelativeLayout? {
+        return notiHolder
+    }
+
     fun getChatHolder(): RelativeLayout? {
         return chatHolder
     }

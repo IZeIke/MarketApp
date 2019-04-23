@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ChatPageAdapter(val context: Context,val myUid: String, private val chatList: MutableList<Chat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatPageAdapter(val context: Context,val myUid: String, private val chatList: MutableList<Chat>, private val imageUrl: String?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface ChatPageAdapterListener{
         fun onStartItemActivity(chat : Chat)
@@ -87,6 +87,11 @@ class ChatPageAdapter(val context: Context,val myUid: String, private val chatLi
         if (holder is ChatViewHolder) {
             holder.message.text = chatList[position].message
             holder.timeText.text = convertTime(chatList[position].create!!)
+            imageUrl?.let { url ->
+                holder.profileImage?.let {
+                    it.setImageUrl(url)
+                }
+            }
         }else
         if (holder is ChatBuyViewHolder) {
             val name_buyText = chatList[position].message?.split("_")?.toTypedArray()
@@ -94,6 +99,11 @@ class ChatPageAdapter(val context: Context,val myUid: String, private val chatLi
             holder.buyText.text = name_buyText!![1]
             holder.imageItem.setImageUrl(chatList[position].mediaUrl)
             holder.timeText.text = convertTime(chatList[position].create!!)
+            imageUrl?.let { url ->
+                holder.profileImage?.let {
+                    it.setImageUrl(url)
+                }
+            }
             holder.chatHolder.setOnClickListener {
                 (context as ChatActivity).onStartItemActivity(chatList[position])
             }
@@ -101,6 +111,11 @@ class ChatPageAdapter(val context: Context,val myUid: String, private val chatLi
             if (holder is ImageViewHolder){
                 holder.timeText.text = convertTime(chatList[position].create!!)
                 holder.imageItem.setImageUrl(chatList[position].mediaUrl)
+                imageUrl?.let { url ->
+                    holder.profileImage?.let {
+                        it.setImageUrl(url)
+                    }
+                }
             }
         }
     }

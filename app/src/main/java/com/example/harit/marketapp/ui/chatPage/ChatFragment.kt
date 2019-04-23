@@ -95,6 +95,10 @@ class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
             singleSelectionPicker.show(childFragmentManager, "picker")
         }
 
+        imageIc.setOnClickListener {
+            singleSelectionPicker.show(childFragmentManager, "picker")
+        }
+
         editText.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 if(editText.text.toString().trim().isEmpty()){
@@ -222,7 +226,7 @@ class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
                     it.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false).also { layoutManager ->
                         layoutManager.stackFromEnd = true
                     }
-                    it.adapter = ChatPageAdapter(activity!!,uid!!,chatList)
+                    it.adapter = ChatPageAdapter(activity!!,uid!!,chatList,user?.imageUrl)
                     it.adapter?.notifyDataSetChanged()
                 }
 

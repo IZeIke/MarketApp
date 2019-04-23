@@ -28,6 +28,16 @@
             android:visibility="gone"
             />
 
+        <TextView
+            android:id="@+id/noNotiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:text="ไม่มีการแจ้งเตือน"
+            android:visibility="gone"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

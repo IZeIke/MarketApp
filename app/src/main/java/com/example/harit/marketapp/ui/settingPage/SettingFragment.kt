@@ -21,8 +21,9 @@ import kotlinx.android.synthetic.main.fragment_setting.*
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.DialogInterface.OnShowListener
-
-
+import com.example.harit.marketapp.ui.EditProfilePage.EditProfileActivity
+import com.example.harit.marketapp.ui.NotiPage.NotiActivity
+import com.example.harit.marketapp.ui.addBankAccountPage.BankAccountActivity
 
 
 class SettingFragment : Fragment() {
@@ -61,6 +62,14 @@ class SettingFragment : Fragment() {
         logOutBtn.setOnClickListener {
             showAlertDialogButtonClicked()
         }
+
+        profileBtn.setOnClickListener {
+            startActivity(Intent(context,EditProfileActivity::class.java).putExtra("user",myUser))
+        }
+
+        bankHolder.setOnClickListener {
+            startActivity(Intent(context,BankAccountActivity::class.java))
+        }
     }
 
     private fun initInstance(myUser: User?) {
@@ -85,6 +94,10 @@ class SettingFragment : Fragment() {
 
         topBar.getChatHolder()?.setOnClickListener {
             startActivity(Intent(context, ChatListActivity::class.java))
+        }
+
+        topBar.getNotiHolder()?.setOnClickListener {
+            startActivity(Intent(context, NotiActivity::class.java))
         }
     }
 

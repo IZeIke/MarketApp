@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/bankName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ธนาคาร กสิกร "
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAppearance="@style/TextAppearance"
+                />
+
+            <TextView
+                android:id="@+id/bankAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เลขบัญชี 45515151515151"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAppearance="@style/TextAppearance"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

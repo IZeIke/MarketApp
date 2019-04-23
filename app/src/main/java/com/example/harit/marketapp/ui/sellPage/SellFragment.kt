@@ -12,6 +12,7 @@ import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
 import com.example.harit.marketapp.ui.EditPage.EditPageActivity
+import com.example.harit.marketapp.ui.NotiPage.NotiActivity
 import com.example.harit.marketapp.ui.adapter.SellItemPageAdapter
 import com.example.harit.marketapp.ui.chatPage.ChatListActivity
 import com.example.harit.marketapp.ui.model.FeedModel
@@ -159,6 +160,10 @@ class SellFragment : Fragment(),SellItemPageAdapter.SellItemPageAdapterInterface
 
         topBar.getChatHolder()?.setOnClickListener {
             startActivity(Intent(context,ChatListActivity::class.java))
+        }
+
+        topBar.getNotiHolder()?.setOnClickListener {
+            startActivity(Intent(context, NotiActivity::class.java))
         }
     }
 

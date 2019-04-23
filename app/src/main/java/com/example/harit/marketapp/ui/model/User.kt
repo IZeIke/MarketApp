@@ -9,5 +9,6 @@ data class User(var email : String? = null,
                 var name : String? = null,
                 var username : String? = null,
                 var nid : Int? = null,
-                var imageUrl : String? = null
+                var imageUrl : String? = null,
+                var address : String? = null
                 ) : Parcelable
