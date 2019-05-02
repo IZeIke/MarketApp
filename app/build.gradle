@@ -55,6 +55,13 @@ dependencies {
     /////
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
+    //ratingBar
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
+
+    //implementation 'com.github.Inconnu08:android-ratingreviews:1.2.0'
+
+    implementation 'com.github.xckevin:AndroidSmartRatingBar:94bfddbf0f'
+
     //spinner
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 

@@ -28,7 +28,7 @@ class FeedFragment : Fragment() {
     lateinit var dbRef : Query
 
     companion object {
-        fun newInstance(bundle: Bundle,int: Int): FeedFragment{
+        fun newInstance(bundle: Bundle,int: Int): FeedFragment {
             val fragment = FeedFragment()
             bundle.putInt("type",int)
             fragment.arguments = bundle

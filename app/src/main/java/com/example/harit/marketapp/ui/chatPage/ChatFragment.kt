@@ -13,10 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.harit.marketapp.R
 import com.example.harit.marketapp.extention.Toast
 import com.example.harit.marketapp.ui.adapter.ChatPageAdapter
-import com.example.harit.marketapp.ui.model.Chat
-import com.example.harit.marketapp.ui.model.ChatListModel
-import com.example.harit.marketapp.ui.model.ChatModel
-import com.example.harit.marketapp.ui.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +24,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior.setTag
 import com.asksira.bsimagepicker.Utils
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
+import android.content.DialogInterface
+import android.widget.ArrayAdapter
+import android.app.AlertDialog
+import com.example.harit.marketapp.ui.model.*
 
 
 class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
@@ -99,6 +99,49 @@ class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
             singleSelectionPicker.show(childFragmentManager, "picker")
         }
 
+        addressIc.setOnClickListener {
+            if(myUser.address != null){
+                sendMessage(myUser.address!!)
+            }else{
+                context?.let { it1 -> "ยังไม่ได้บันทึกที่อยู่".Toast(it1) }
+            }
+        }
+
+        accountIc.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("เลือกบัญชีธนาคาร")
+
+            val bankList = mutableListOf<BankAccountModel>()
+
+            FirebaseFirestore.getInstance().collection("BankAccount").document("list")
+                    .collection(uid!!).get().addOnCompleteListener {task ->
+                        if(task.isSuccessful){
+                            for (doc in task.result){
+                                val model = doc.toObject(BankAccountModel::class.java)
+                                bankList.add(model)
+                            }
+
+                            if(bankList.size != 0){
+                                val bank = Array(bankList.size){""}
+                                for ((i, item) in bankList.withIndex()){
+                                    bank[i] = item.bankName!!
+                                }
+                                builder.setItems(bank) { dialog, which ->
+                                    sendMessage("ธนาคาร ${bankList[which].bankName} เลขบัญชี ${bankList[which].account}")
+                                    dialog.dismiss()
+                                }
+
+                                val dialog = builder.create()
+                                dialog.show()
+                            }else{
+                                "ไม่มีบัญชีธนาคาร".Toast(context!!)
+                            }
+                        }
+                    }
+
+            //val animals = arrayOf("horse", "cow", "camel", "sheep", "goat")
+        }
+
         editText.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 if(editText.text.toString().trim().isEmpty()){
@@ -134,36 +177,7 @@ class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
 
 
         icSend.setOnClickListener {
-
-                var key = mMessagesRef.child(chatId).push().key!!
-                var chatModel = ChatModel().also {chatModel ->
-                    chatModel.chatId = chatId
-                    chatModel.mediaUrl = ""
-                    chatModel.message = editText.text.toString()
-                    chatModel.messageType = "TEXT"
-                    chatModel.senderId = uid
-                    chatModel.messageId = key
-                    chatModel.create = ServerValue.TIMESTAMP
-                }
-                editText.set("")
-                //(activity as ChatFragmentInterface).closeKeyboard()
-                var chatList = ChatListModel().also { chatListModel ->
-                    chatListModel.user = user
-                    chatListModel.message = chatModel.message
-                    chatListModel.messageType = chatModel.messageType
-                }
-
-                var myChatList = ChatListModel().also { chatListModel ->
-                    chatListModel.user = myUser
-                    chatListModel.message = chatModel.message
-                    chatListModel.messageType = chatModel.messageType
-                }
-
-                mMessagesRef.child(chatId).child(key).setValue(chatModel)
-                fireStoreRef.collection("ChatList").document("chatList")
-                        .collection(user.id!!).document(uid!!).set(myChatList)
-                fireStoreRef.collection("ChatList").document("chatList")
-                        .collection(uid!!).document(user.id!!).set(chatList)
+                sendMessage(editText.text.toString())
         }
 
         val childEventListener = object : ChildEventListener {
@@ -255,6 +269,38 @@ class ChatFragment: Fragment(),BSImagePicker.OnSingleImageSelectedListener{
 
         })*/
 
+    }
+
+    private fun sendMessage(str : String) {
+        var key = mMessagesRef.child(chatId).push().key!!
+        var chatModel = ChatModel().also {chatModel ->
+            chatModel.chatId = chatId
+            chatModel.mediaUrl = ""
+            chatModel.message = str
+            chatModel.messageType = "TEXT"
+            chatModel.senderId = uid
+            chatModel.messageId = key
+            chatModel.create = ServerValue.TIMESTAMP
+        }
+        editText.set("")
+        //(activity as ChatFragmentInterface).closeKeyboard()
+        var chatList = ChatListModel().also { chatListModel ->
+            chatListModel.user = user
+            chatListModel.message = chatModel.message
+            chatListModel.messageType = chatModel.messageType
+        }
+
+        var myChatList = ChatListModel().also { chatListModel ->
+            chatListModel.user = myUser
+            chatListModel.message = chatModel.message
+            chatListModel.messageType = chatModel.messageType
+        }
+
+        mMessagesRef.child(chatId).child(key).setValue(chatModel)
+        fireStoreRef.collection("ChatList").document("chatList")
+                .collection(user.id!!).document(uid!!).set(myChatList)
+        fireStoreRef.collection("ChatList").document("chatList")
+                .collection(uid!!).document(user.id!!).set(chatList)
     }
 
     override fun onSingleImageSelected(uri: Uri?) {

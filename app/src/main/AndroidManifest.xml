@@ -81,6 +81,12 @@
         <activity android:name=".ui.addBankAccountPage.BankAccountActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.RatingPage.RatingActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.HistoryPage.HistoryActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
 
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"

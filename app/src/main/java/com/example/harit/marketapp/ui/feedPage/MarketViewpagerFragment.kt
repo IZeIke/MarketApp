@@ -1,5 +1,6 @@
 package com.example.harit.marketapp.ui.feedPage
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.asksira.bsimagepicker.GridItemSpacingDecoration
 import com.example.harit.marketapp.R
+import com.example.harit.marketapp.extention.Status
 import com.example.harit.marketapp.helper.RecyclerWithLoadMore
 import com.example.harit.marketapp.ui.NotiPage.NotiActivity
 import com.example.harit.marketapp.ui.adapter.FeedPageAdapter
@@ -31,6 +35,7 @@ class MarketViewpagerFragment : Fragment() {
     private val feedList : MutableList<FeedModel> = arrayListOf()
     lateinit var myUser : User
     lateinit var dbRef : Query
+    lateinit var feedViewModel: FeedViewModel
     var lastVisible : DocumentSnapshot? = null
     val db = FirebaseFirestore.getInstance()
 
@@ -44,12 +49,42 @@ class MarketViewpagerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        initViewModel()
         return LayoutInflater.from(context).inflate(R.layout.fragment_sell,container,false)
     }
 
+    private fun initViewModel() {
+
+        feedViewModel.getFeedData().observe(viewLifecycleOwner, Observer { feedValue ->
+            feedValue?.let {
+                if(feedValue.status == Status.SUCCESS){
+                    lastVisible = feedValue.data?.lastVisible
+                    setRecyclerView(feedValue.data?.feedList!!)
+                    swipeRefreshLayout?.isRefreshing = false
+                } else {
+
+                }
+            }
+        })
+
+        feedViewModel.getFeedLoadMoreData().observe(viewLifecycleOwner, Observer { feedValue ->
+            feedValue?.let {
+                if(feedValue.status == Status.SUCCESS){
+                    lastVisible = feedValue.data?.lastVisible
+                    (recyclerView.adapter as FeedPageAdapter).addList(feedValue.data?.feedList!!)
+                } else {
+
+                }
+            }
+        })
+    }
+
+    @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTopBar()
@@ -74,43 +109,13 @@ class MarketViewpagerFragment : Fragment() {
             getData()
         }
 
-        /*var adapter = MainPageAdapter(childFragmentManager)
-        adapter.setFragmentItem(FeedFragment.newInstance(bundle,0)
-                , 0, "Set")
-        viewPager?.adapter = adapter
-        initTab()*/
+
     }
 
-    private fun initTab() {
-        /*tabBar.setSelectedTabIndicatorColor(ContextCompat.getColor(tabBar.context, R.color.white))
-        tabBar.setTabTextColors(ContextCompat.getColor(tabBar.context, R.color.white40)
-                , ContextCompat.getColor(tabBar.context, R.color.white))
-        tabBar.setupWithViewPager(viewPager)*/
-    }
 
     private fun getData() {
 
-        dbRef.limit(20)
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedModel::class.java)
-                        //feedItem.id = document.id
-                        //if(feedItem.status != "sold") {
-                        feedList.add(feedItem)
-                        //}
-                    }
-
-                    if(result.size() != 0)
-                        lastVisible = result.documents[result.size() - 1]
-
-                    setRecyclerView(feedList)
-                    swipeRefreshLayout?.isRefreshing = false
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("document-error", "Error getting documents: ", exception)
-                }
+        feedViewModel.getFeed()
     }
 
     private fun setRecyclerView(feedList: MutableList<FeedModel>) {
@@ -133,29 +138,9 @@ class MarketViewpagerFragment : Fragment() {
     }
 
     private fun getDataLoadMore() {
-
-        val feedList = mutableListOf<FeedModel>()
-        dbRef.startAfter(lastVisible!!)
-                .limit(20)
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("document", document.id + " => " + document.data)
-                        val feedItem = document.toObject(FeedModel::class.java)
-                        //if(feedItem.status != "sold") {
-                        feedList.add(feedItem)
-                        //}
-                    }
-
-                    if(result.size() != 0){
-                        lastVisible = result.documents[result.size() - 1]
-                    }
-
-                    (recyclerView.adapter as FeedPageAdapter).addList(feedList)
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("document-error", "Error getting documents: ", exception)
-                }
+        lastVisible?.let {
+            feedViewModel.getFeedInputLoadMore(it)
+        }
 
     }
 

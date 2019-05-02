@@ -36,6 +36,9 @@ class FeedPageAdapter(val context: Context, private val feedList: MutableList<Fe
         if(holder is ItemViewHolder){
 
             feedList[position].let {feedModel ->
+
+                holder.typeTag.visibility = View.VISIBLE
+
                 holder.imageView.set(R.drawable.mockup)
                 feedModel.imageUrl?.let {list ->
                     if(list.size > 0)

@@ -119,9 +119,8 @@ class StepPhotoFragment : Fragment() , BlockingStep , BSImagePicker.OnMultiImage
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-
     }
 
     override fun onSelected() {

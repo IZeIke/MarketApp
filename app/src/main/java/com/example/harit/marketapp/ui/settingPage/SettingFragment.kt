@@ -22,6 +22,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.DialogInterface.OnShowListener
 import com.example.harit.marketapp.ui.EditProfilePage.EditProfileActivity
+import com.example.harit.marketapp.ui.HistoryPage.HistoryActivity
 import com.example.harit.marketapp.ui.NotiPage.NotiActivity
 import com.example.harit.marketapp.ui.addBankAccountPage.BankAccountActivity
 
@@ -61,6 +62,10 @@ class SettingFragment : Fragment() {
 
         logOutBtn.setOnClickListener {
             showAlertDialogButtonClicked()
+        }
+
+        historyBtn.setOnClickListener {
+            startActivity(Intent(context,HistoryActivity::class.java))
         }
 
         profileBtn.setOnClickListener {
